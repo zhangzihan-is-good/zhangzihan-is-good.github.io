@@ -2,7 +2,32 @@
 <html lang="en"> 
 <head>
 	<title>张梓寒的个人主页</title>
-	
+	<style>
+        /* 样式定义开始 */
+
+        .qr-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .qr-code {
+            display: none;
+            position: absolute;
+            top: 100%;            /* 使二维码显示在文本的下方 */
+            left: 50%;            /* 水平居中二维码 */
+            transform: translateX(-50%);   /* 配合上面的left属性实现水平居中 */
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: white;
+            z-index: 1;
+        }
+
+        .qr-container:hover .qr-code {
+            display: block;       /* 当悬停时显示二维码 */
+        }
+
+        /* 样式定义结束 */
+    	</style>
 	<!-- Meta -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -118,7 +143,7 @@
 						</div><!--//resume-main-->
 						<div class="resume-footer text-center">
 							<ul class="resume-social-list list-inline mx-auto mb-0 d-inline-block text-muted">
-								<p>欢迎关注我的博客<a href="https://www.cnblogs.com/ZihanZhang/" target="_blank">Zihanzhang</a>和微信公众号BCIdaily
+								<p>欢迎关注我的博客<a href="https://www.cnblogs.com/ZihanZhang/" target="_blank">Zihanzhang</a>和微信公众号<div class="qr-container">鼠标悬停查看二维码<img src="ma.png" alt="二维码" class="qr-code"></div>
 							</ul>
 						</div><!--//resume-footer-->
 					</article>
