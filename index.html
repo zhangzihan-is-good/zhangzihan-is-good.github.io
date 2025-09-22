@@ -47,7 +47,25 @@
 	
 	<!-- Theme CSS -->  
 	<link id="theme-style" rel="stylesheet" href="assets/css/devresume.css">
-
+	<style>
+	  /* 设一个页面内容的理想宽度：最小680px，理想90vw，最大880px */
+	  :root { --page-width: clamp(680px, 90vw, 880px); }
+	
+	  /* 方案A：只收窄简历主体卡片 */
+	  .resume-wrapper {
+	    max-width: var(--page-width);
+	    margin-left: auto;
+	    margin-right: auto;
+	  }
+	
+	  /* 方案B（可选）：连同上层容器一起收窄，更“紧凑” */
+	  .container.px-3 {
+	    max-width: var(--page-width) !important; /* 如主题里有更强选择器时用 !important */
+	  }
+	
+	  /* 你现有代码里的小修复：让二维码默认隐藏 */
+	  .qr-code { display: none; }
+	</style>
 </head> 
 
 	
