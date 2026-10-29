@@ -67,6 +67,7 @@ html[data-language=zh] .pub-title-zh { font-size: 21px; }
 .pub-actions { gap: 14px; }
 .pub-actions a, .pub-actions button { font-size: 13px; line-height: 1.6; }
 .pub-actions .zh { display: inline; font-size: 12px; margin-left: 5px; }
+.pub-actions .en, .pub-actions .zh { display: inline-block; white-space: nowrap; }
 .empty-state p { font-size: 15px; }
 .subheading { font-size: 19px; }
 .subheading .zh { font-size: 15px; }
