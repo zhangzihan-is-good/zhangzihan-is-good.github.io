@@ -12,7 +12,7 @@ window.PROFILE_DATA = {
       id: 'cofett', title: 'Is EEG-to-Text Feasible in Real-World Scenarios? An In-Depth Analysis Using a Neuropsychology-Inspired Benchmark',
       zhTitle: 'EEG到文本能否走向真实场景？基于神经心理学启发基准的深入分析',
       authors: 'Zihan Zhang, Yu Bao, Xiao Ding, Tianyi Jiang, Kai Xiong',
-      venue: 'ACL · Long Papers', year: 2026, type: 'conference', topics: ['eeg', 'nlp'], selected: true,
+      venue: 'ACL main Long Papers', year: 2026, type: 'conference', topics: ['eeg', 'nlp'], selected: true,
       summary: {
         zh: '以神经心理学启发的基准考察EEG到文本解码，关注真实使用场景下的评估问题。',
         en: 'A neuropsychology-inspired benchmark for examining EEG-to-text decoding and its evaluation in realistic settings.'
@@ -76,7 +76,11 @@ window.PROFILE_DATA = {
       authors: 'Zihan Zhang', venue: "Master’s thesis · Harbin Institute of Technology", year: 2023, type: 'thesis', topics: ['nlp'], selected: false,
       summary: {zh: '围绕预训练模型与文本时序关系图构建开展研究。', en: 'Research on constructing temporal relation graphs using pre-trained models.'},
       url: 'https://link.cnki.net/doi/10.27061/d.cnki.ghgdu.2023.002842',
-      doi: '10.27061/d.cnki.ghgdu.2023.002842', linkLabel: {zh: '知网论文', en: 'CNKI'},
+      doi: '10.27061/d.cnki.ghgdu.2023.002842',
+      links: [
+        {url:'https://link.cnki.net/doi/10.27061/d.cnki.ghgdu.2023.002842',label:{zh:'国内知网',en:'CNKI (China)'}},
+        {url:'https://link.oversea.cnki.net/doi/10.27061/d.cnki.ghgdu.2023.002842',label:{zh:'海外知网',en:'CNKI (Overseas)'}}
+      ],
       bibtex: '@mastersthesis{zhang2023temporal,\n  title = {基于预训练模型的时序关系图构建技术研究},\n  author = {张梓寒},\n  school = {哈尔滨工业大学},\n  year = {2023},\n  doi = {10.27061/d.cnki.ghgdu.2023.002842}\n}'
     }
   ],

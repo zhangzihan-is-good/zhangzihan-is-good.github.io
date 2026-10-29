@@ -10,7 +10,7 @@
     heroEyebrow:{en:'Ph.D. researcher · Brain & intelligence',zh:'博士研究生 · 大脑与智能'},
     heroStatement:{en:'Learning from the brain. Building for intelligence.',zh:'向大脑学习，探索智能的可能。'},
     bio:{en:'I am a Ph.D. student at Harbin Institute of Technology (SCIR). My research connects brain–computer interfaces, brain-inspired AI, and natural language processing.',zh:'我是哈尔滨工业大学 SCIR 实验室博士生，研究脑机接口、类脑人工智能与自然语言处理。'},
-    exploreWork:{en:'Explore my work',zh:'探索研究'},viewCV:{en:'View CV',zh:'查看简历'},emailLink:{en:'Email ↗',zh:'邮箱 ↗'},portraitFoot:{en:'Curiosity across disciplines.',zh:'保持好奇，跨越学科。'},
+    exploreWork:{en:'Explore my work',zh:'探索研究'},emailLink:{en:'Email ↗',zh:'邮箱 ↗'},portraitFoot:{en:'Curiosity across disciplines.',zh:'保持好奇，跨越学科。'},
     hit:{en:'Harbin Institute of Technology',zh:'哈尔滨工业大学'},hitDetail:{en:'Ph.D. · SCIR · 2023–present',zh:'计算机科学与技术 · 博士'},ntu:{en:'Nanyang Technological University',zh:'南洋理工大学'},ntuDetail:{en:'CSC Visiting Ph.D. · 2026–2027',zh:'认知神经科学 · 联合培养'},
     researchTitle:{en:'A connected perspective.',zh:'研究方向'},researchIntro:{en:'At the intersection of biological intelligence and machine learning.',zh:'在生物智能与机器学习的交汇处，探索信号、认知与语言。'},
     topicEEG:{en:'Brain–computer interfaces',zh:'脑机接口'},topicBrain:{en:'Brain-inspired AI',zh:'类脑人工智能'},topicNLP:{en:'Language & cognition',zh:'语言与认知'},topicMedical:{en:'Multimodal AI',zh:'多模态人工智能'},clickDirection:{en:'Select a node to explore',zh:'点击节点探索研究'},researchFocus:{en:'Research focus',zh:'研究主题'},relatedWork:{en:'Explore related work',zh:'浏览相关成果'},
@@ -34,6 +34,7 @@
   const authorHTML = s => esc(s).replace(/Zihan Zhang/g,'<strong>Zihan Zhang</strong>');
   const venueLabel = p => p.id === 'cofett' ? 'ACL' : p.id === 'multibcd' ? 'BSPC' : p.type === 'thesis' ? 'Thesis' : p.venue;
   const topicLabel = id => topics.find(t=>t.id===id)?.label || {en:id,zh:id};
+  const paperLinks = (p, inDialog = false) => (p.links || [{url:p.url,label:p.linkLabel || {en:'Paper',zh:'论文'}}]).map((link,i) => `<a${inDialog ? ` class="button ${i === 0 ? 'primary' : 'secondary'}"` : ''} href="${esc(link.url)}" target="_blank" rel="noopener">${dual(link.label)} ↗</a>`).join('');
   function translate() {
     $$('[data-t]').forEach(el => {if(T[el.dataset.t]) el.innerHTML=dual(T[el.dataset.t]);});
     const statement = $('.hero-statement');
@@ -68,7 +69,7 @@
   }
   function renderPapers(){
     const matches=matchingPapers();
-    $('#publication-list').innerHTML=matches.map(p=>`<article class="pub-row" data-paper="${p.id}"><div class="pub-meta"><span class="pub-year">${p.year}</span><span class="pub-venue">${esc(venueLabel(p))}</span></div><div class="pub-main"><button class="pub-title-button" data-open="${p.id}" aria-label="${esc(localized('Explore: '+p.title,'查看：'+p.zhTitle))}"><h3 class="en" lang="en">${esc(p.title)}</h3><p class="pub-title-zh zh" lang="zh-CN">${esc(p.zhTitle)}</p></button><p class="pub-authors">${authorHTML(p.authors)}</p><p class="pub-citation">${esc(p.venue)} · ${p.year}</p><div class="pub-topics">${p.topics.map(t=>`<span>${dual(topicLabel(t))}</span>`).join('')}</div></div><div class="pub-actions"><a href="${esc(p.url)}" target="_blank" rel="noopener">${dual(p.linkLabel||{en:'Paper',zh:'论文'})} ↗</a>${p.codeUrl?`<a href="${esc(p.codeUrl)}" target="_blank" rel="noopener">${dual({en:'Code',zh:'代码'})} ↗</a>`:''}<button data-open="${p.id}">${dual({en:'Overview',zh:'研究介绍'})} +</button><button data-cite="${p.id}">${dual({en:'Cite',zh:'引用'})} ⧉</button></div></article>`).join('');
+    $('#publication-list').innerHTML=matches.map(p=>`<article class="pub-row" data-paper="${p.id}"><div class="pub-meta"><span class="pub-year">${p.year}</span><span class="pub-venue">${esc(venueLabel(p))}</span></div><div class="pub-main"><button class="pub-title-button" data-open="${p.id}" aria-label="${esc(localized('Explore: '+p.title,'查看：'+p.zhTitle))}"><h3 class="en" lang="en">${esc(p.title)}</h3><p class="pub-title-zh zh" lang="zh-CN">${esc(p.zhTitle)}</p></button><p class="pub-authors">${authorHTML(p.authors)}</p><p class="pub-citation">${esc(p.venue)} · ${p.year}</p><div class="pub-topics">${p.topics.map(t=>`<span>${dual(topicLabel(t))}</span>`).join('')}</div></div><div class="pub-actions">${paperLinks(p)}${p.codeUrl?`<a href="${esc(p.codeUrl)}" target="_blank" rel="noopener">${dual({en:'Code',zh:'代码'})} ↗</a>`:''}<button data-open="${p.id}">${dual({en:'Overview',zh:'研究介绍'})} +</button><button data-cite="${p.id}">${dual({en:'Cite',zh:'引用'})} ⧉</button></div></article>`).join('');
     $('#paper-count').innerHTML=dual({en:`${matches.length} of ${D.publications.length} works`,zh:`显示 ${matches.length} / ${D.publications.length} 项成果`});
     $('#empty-papers').hidden=matches.length>0;
     $('#reset-filters').hidden=filter==='all'&&!$('#paper-search').value&&$('#year-filter').value==='all';
@@ -96,7 +97,7 @@
     return success;
   }
   function renderDialog(p){
-    $('#dialog-body').innerHTML=`<h2 id="dialog-title" class="en" lang="en">${esc(p.title)}</h2><p class="dialog-zh-title zh" lang="zh-CN">${esc(p.zhTitle)}</p><p class="dialog-authors">${authorHTML(p.authors)}</p><p class="dialog-venue">${esc(p.venue)} · ${p.year}</p><div class="dialog-summary"><div class="summary-label">${dual({en:'Research in brief',zh:'研究简述'})}</div>${dual(p.summary)}</div><div class="dialog-actions"><a class="button primary" href="${esc(p.url)}" target="_blank" rel="noopener">${dual(p.linkLabel||{en:'Read paper',zh:'阅读论文'})} ↗</a><button class="text-button" data-cite="${p.id}">${dual({en:'Copy BibTeX',zh:'复制引用'})} ⧉</button>${p.codeUrl?`<a class="text-button" href="${esc(p.codeUrl)}" target="_blank" rel="noopener">${dual({en:'Code',zh:'代码'})} ↗</a>`:''}</div><details class="bib-details"><summary>BibTeX</summary><pre>${esc(p.bibtex)}</pre></details>`;
+    $('#dialog-body').innerHTML=`<h2 id="dialog-title" class="en" lang="en">${esc(p.title)}</h2><p class="dialog-zh-title zh" lang="zh-CN">${esc(p.zhTitle)}</p><p class="dialog-authors">${authorHTML(p.authors)}</p><p class="dialog-venue">${esc(p.venue)} · ${p.year}</p><div class="dialog-summary"><div class="summary-label">${dual({en:'Research in brief',zh:'研究简述'})}</div>${dual(p.summary)}</div><div class="dialog-actions">${paperLinks(p,true)}<button class="text-button" data-cite="${p.id}">${dual({en:'Copy BibTeX',zh:'复制引用'})} ⧉</button>${p.codeUrl?`<a class="text-button" href="${esc(p.codeUrl)}" target="_blank" rel="noopener">${dual({en:'Code',zh:'代码'})} ↗</a>`:''}</div><details class="bib-details"><summary>BibTeX</summary><pre>${esc(p.bibtex)}</pre></details>`;
     $('#paper-dialog').setAttribute('aria-labelledby',language==='zh'?'dialog-zh-label':'dialog-title');
     $('.dialog-zh-title').id='dialog-zh-label';
   }

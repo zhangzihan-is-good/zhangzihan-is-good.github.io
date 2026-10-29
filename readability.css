@@ -14,7 +14,7 @@ body { font-size: 17px; }
 .social-links { font-size: 13px; gap: 24px; }
 .social-links .zh { font-size: 12px; }
 .floating-label { font-size: 11px; }
-.portrait-foot { font-size: 10px; }
+.portrait-foot { font-size: 10px; justify-content: flex-end; }
 .affiliation strong { font-size: 14px; }
 .affiliation .zh { font-size: 12px; }
 .affiliation > div > span { font-size: 12px; }
@@ -180,7 +180,7 @@ html[data-language=zh] .pub-title-zh { font-size: 21px; }
   .hero-bio .zh { font-size: 15px; }
   .button { font-size: 14px; gap: 15px; padding-inline: 16px; }
   .button .zh { font-size: 12px; }
-  .hero-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+  .hero-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; width: fit-content; }
   .hero-actions .button { justify-content: space-between; gap: 8px; padding: 12px 14px; }
   html[data-language=both] .hero-actions .button > [data-t] .zh { display: block; margin: 4px 0 0; }
   .social-links { font-size: 12px; gap: 18px; flex-wrap: wrap; }

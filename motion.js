@@ -51,7 +51,7 @@
 
   const row = document.createElement('div');
   row.className = 'motion-controls';
-  row.innerHTML = '<span class="motion-note"><span class="en" lang="en">Signal sketch</span><span class="zh" lang="zh-CN">信号示意</span></span><button class="motion-toggle" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="motion-pause-icon" d="M7 5v10M13 5v10"/><path class="motion-play-icon" d="m7 5 8 5-8 5Z"/></svg><span class="motion-toggle-label"></span></button>';
+  row.innerHTML = '<button class="motion-toggle" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="motion-pause-icon" d="M7 5v10M13 5v10"/><path class="motion-play-icon" d="m7 5 8 5-8 5Z"/></svg><span class="motion-toggle-label"></span></button>';
   hero.appendChild(row);
   const toggle = row.querySelector('button');
   const label = row.querySelector('.motion-toggle-label');
