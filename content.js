@@ -71,15 +71,15 @@ window.PROFILE_DATA = {
       bibtex: '@article{zhang2024chisco,\n  title = {Chisco: An EEG-based BCI dataset for decoding of imagined speech},\n  author = {Zhang, Zihan and Ding, Xiao and Bao, Yu and Zhao, Yi and Liang, Xia and Qin, Bing and Liu, Ting},\n  journal = {Scientific Data},\n  volume = {11},\n  pages = {1265},\n  year = {2024},\n  doi = {10.1038/s41597-024-04114-1}\n}'
     },
     {
-      id: 'masters-thesis', title: 'Research on Temporal Relation Graph Construction Based on Pre-trained Models',
+      id: 'masters-thesis', title: 'Research on Construction Technology of Time Sequence Diagram Based on Pre-training Model',
       zhTitle: '基于预训练模型的时序关系图构建技术研究',
       authors: 'Zihan Zhang', venue: "Master’s thesis · Harbin Institute of Technology", year: 2023, type: 'thesis', topics: ['nlp'], selected: false,
       summary: {zh: '围绕预训练模型与文本时序关系图构建开展研究。', en: 'Research on constructing temporal relation graphs using pre-trained models.'},
-      url: 'https://link.cnki.net/doi/10.27061/d.cnki.ghgdu.2023.002842',
+      url: 'https://oversea.cnki.net/kcms2/article/abstract?v=bGUDtmHwhl0iO2VkDoYZ94_uw8VaV_yCTlORMTzSNtro6H0KhsmQ9F6j_8qDeoub_L_yyfVmeFG29dyHGbT87gLaW_6nK4TbCEPVdlX_gVH_6SZdz68vXfoMVb2l2rUfWxxkTUfoaJs8a94icDOaA3rkjE8wuSB1syhX9uQa-cs=&uniplatform=OVERSEA',
       doi: '10.27061/d.cnki.ghgdu.2023.002842',
       links: [
         {url:'https://link.cnki.net/doi/10.27061/d.cnki.ghgdu.2023.002842',label:{zh:'国内知网',en:'CNKI (China)'}},
-        {url:'https://link.oversea.cnki.net/doi/10.27061/d.cnki.ghgdu.2023.002842',label:{zh:'海外知网',en:'CNKI (Overseas)'}}
+        {url:'https://oversea.cnki.net/kcms2/article/abstract?v=bGUDtmHwhl0iO2VkDoYZ94_uw8VaV_yCTlORMTzSNtro6H0KhsmQ9F6j_8qDeoub_L_yyfVmeFG29dyHGbT87gLaW_6nK4TbCEPVdlX_gVH_6SZdz68vXfoMVb2l2rUfWxxkTUfoaJs8a94icDOaA3rkjE8wuSB1syhX9uQa-cs=&uniplatform=OVERSEA',label:{zh:'海外知网',en:'CNKI (Overseas)'}}
       ],
       bibtex: '@mastersthesis{zhang2023temporal,\n  title = {基于预训练模型的时序关系图构建技术研究},\n  author = {张梓寒},\n  school = {哈尔滨工业大学},\n  year = {2023},\n  doi = {10.27061/d.cnki.ghgdu.2023.002842}\n}'
     }
