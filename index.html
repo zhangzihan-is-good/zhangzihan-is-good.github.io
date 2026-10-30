@@ -14,10 +14,14 @@
   <link rel="stylesheet" href="readability.css?v=3">
   <link rel="stylesheet" href="motion.css?v=2">
   <link rel="stylesheet" href="brain-ai.css?v=1">
-  <script>try{document.documentElement.dataset.theme=localStorage.getItem('zz-theme')||'light';document.documentElement.dataset.language=localStorage.getItem('zz-language')||'both'}catch(e){}</script>
+  <link rel="stylesheet" href="visuals.css?v=20261030">
+  <link rel="stylesheet" href="polish.css?v=20261030">
+  <script>try{const q=new URLSearchParams(location.search);document.documentElement.dataset.theme=localStorage.getItem('zz-theme')||'light';const l=q.get('lang')||localStorage.getItem('zz-language')||'both';document.documentElement.dataset.language=['zh','en','both'].includes(l)?l:'both';document.documentElement.dataset.motionPaused=String(localStorage.getItem('zz-motion-paused')==='true'||matchMedia('(prefers-reduced-motion:reduce)').matches)}catch(e){}</script>
   <script src="content.js?v=4" defer></script>
-  <script src="app.js?v=2" defer></script>
+  <script src="app.js?v=20261030" defer></script>
   <script src="motion.js?v=2" defer></script>
+  <script src="visuals.js?v=20261030" defer></script>
+  <script src="polish.js?v=20261030" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content / 跳转正文</a>
@@ -26,10 +30,11 @@
     <div class="header-inner">
       <a href="#home" class="brand" aria-label="Zihan Zhang — Home"><span class="brand-symbol" aria-hidden="true">z<span>·</span></span><span>Zihan Zhang<span class="brand-zh">张梓寒</span></span></a>
       <nav class="desktop-nav" aria-label="Main navigation">
+        <span class="nav-active-indicator" aria-hidden="true"></span>
         <a href="#research" data-t="navResearch"></a><a href="#publications" data-t="navPublications"></a><a href="#journey" data-t="navJourney"></a><a href="#contact" data-t="navContact"></a>
       </nav>
       <div class="header-tools">
-        <div class="language-switch" role="group" aria-label="Language / 语言"><button data-lang="zh" aria-label="中文">中</button><button data-lang="en" aria-label="English">EN</button><button data-lang="both" aria-label="中英文对照">对照</button></div>
+        <div class="language-switch" role="group" aria-label="Language / 语言"><span class="language-active-indicator" aria-hidden="true"></span><button data-lang="zh" aria-label="中文">中</button><button data-lang="en" aria-label="English">EN</button><button data-lang="both" aria-label="中英文对照">对照</button></div>
         <button id="theme-toggle" class="icon-button" aria-label="Switch color theme / 切换深浅主题"><svg class="moon" viewBox="0 0 24 24"><path d="M20.5 14A8.6 8.6 0 0 1 10 3.5 8.7 8.7 0 1 0 20.5 14Z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
         <button class="icon-button menu-button" id="menu-toggle" aria-label="Open navigation / 打开导航" aria-expanded="false" aria-controls="mobile-nav"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       </div>
@@ -99,7 +104,8 @@
     </section>
     <section class="publications-section section" id="publications"><div class="page-width">
       <div class="section-heading"><div><span class="eyebrow section-number">02 / PUBLICATIONS</span><h2 data-t="publicationsTitle"></h2></div><a id="publication-scholar" class="text-button" target="_blank" rel="noopener"><span data-t="scholarProfile"></span><span>↗</span></a></div>
-      <div class="publication-toolbar"><div id="topic-filters" class="filter-tabs" role="group" aria-label="Filter by research topic / 按研究方向筛选"></div><div class="publication-tools"><label class="search-field"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="paper-search" type="search" placeholder="Search papers / 搜索论文" aria-label="Search publications / 搜索论文"><kbd>/</kbd></label><label class="year-field"><span class="sr-only" data-t="year"></span><select id="year-filter" aria-label="Filter by year / 按年份筛选"><option value="all">All years / 全部年份</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select></label></div></div>
+      <div class="publication-toolbar"><div id="topic-filters" class="filter-tabs" role="group" aria-label="Filter by research topic / 按研究方向筛选"></div><div class="publication-tools"><div class="search-field"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="paper-search" type="search" placeholder="Search papers / 搜索论文" aria-label="Search publications / 搜索论文"><kbd>/</kbd></div><label class="year-field"><span class="sr-only" data-t="year"></span><select id="year-filter" aria-label="Filter by year / 按年份筛选"><option value="all">All years / 全部年份</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select></label></div></div>
+      <div id="active-filters" class="active-filters" aria-label="Active filters / 当前筛选条件" hidden></div>
       <div class="result-summary"><span id="paper-count" aria-live="polite"></span><button id="reset-filters" class="text-button" hidden data-t="resetFilters"></button><span class="publication-note" data-t="publicationNote"></span></div>
       <div id="publication-list" class="publication-list"></div>
       <div id="empty-papers" class="empty-state" hidden><h3 data-t="noResults"></h3><p data-t="noResultsHint"></p><button class="button secondary" id="empty-reset" data-t="resetFilters"></button></div>
