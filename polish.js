@@ -45,7 +45,7 @@
         nav.style.setProperty('--nav-width', `${active.offsetWidth}px`);
       }
     }
-    const selectedLanguage = languageSwitch?.querySelector('button.active');
+    const selectedLanguage = languageSwitch?.querySelector('[data-lang].active');
     if (selectedLanguage) {
       languageSwitch.style.setProperty('--language-x', `${selectedLanguage.offsetLeft}px`);
       languageSwitch.style.setProperty('--language-width', `${selectedLanguage.offsetWidth}px`);

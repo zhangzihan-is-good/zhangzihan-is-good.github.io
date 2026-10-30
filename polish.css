@@ -57,8 +57,8 @@ html[data-language=zh] .section h2 > .zh { font-size: 34px; color: var(--ink); m
 .desktop-nav .zh { font-size: 12px; margin-left: 5px; }
 .nav-active-indicator { position: absolute; z-index: 0; inset: 0 auto 0 0; width: var(--nav-width, 0px); transform: translateX(var(--nav-x, 0px)); border-radius: 7px; background: var(--lavender); opacity: var(--nav-opacity, 1); transition: transform .32s var(--ease-out), width .32s var(--ease-out), opacity .2s; pointer-events: none; }
 .language-switch { position: relative; isolation: isolate; background: var(--surface); padding: 4px; gap: 2px; border-radius: 9px; }
-.language-switch button { position: relative; z-index: 1; min-width: 31px; padding: 5px 8px; font-size: 12px; transition: color .2s; }
-.language-switch button.active { background: transparent; color: var(--paper); }
+.language-switch :is(button,a) { position: relative; z-index: 1; min-width: 31px; padding: 5px 8px; font-size: 12px; transition: color .2s; }
+.language-switch :is(button,a).active { background: transparent; color: var(--paper); }
 .language-active-indicator { position: absolute; z-index: 0; top: 4px; bottom: 4px; left: 0; width: var(--language-width, 31px); transform: translateX(var(--language-x, 4px)); background: var(--ink); border-radius: 5px; transition: transform .28s var(--ease-out), width .28s var(--ease-out); pointer-events: none; }
 .icon-button { width: 38px; height: 38px; transition: background .2s, color .2s, transform .2s; }
 .icon-button:hover { color: var(--purple); }
@@ -292,7 +292,7 @@ html[data-motion-paused=true] .filter-active-indicator { transition: none; }
   .brand-symbol { width: 32px; height: 32px; font-size: 30px; line-height: 28px; border-radius: 9px; }
   .brand-zh { font-size: 11px; letter-spacing: 2px; }
   .language-switch { padding: 3px; gap: 1px; }
-  .language-switch button { min-width: 27px; font-size: 12px; padding: 5px 5px; }
+  .language-switch :is(button,a) { min-width: 27px; font-size: 12px; padding: 5px 5px; }
   .language-active-indicator { top: 3px; bottom: 3px; }
   .header-tools .icon-button { width: 32px; height: 35px; }
   .section { padding-block: 62px; }
@@ -405,7 +405,7 @@ html[data-motion-paused=true] .filter-active-indicator { transition: none; }
   .brand { font-size: 12px; gap: 7px; }
   .brand-zh { font-size: 10px; }
   .brand-symbol { width: 29px; height: 29px; }
-  .language-switch button { min-width: 24px; padding-inline: 4px; }
+  .language-switch :is(button,a) { min-width: 24px; padding-inline: 4px; }
   .hero h1 { font-size: 49px; }
   .hero-statement { font-size: 25px; }
   .research-map { min-height: 430px; }
@@ -435,3 +435,6 @@ html[data-motion-paused=true] .filter-active-indicator { transition: none; }
   .honors-panel { background: transparent; }
   .contact-section { background: transparent; }
 }
+
+/* Real language links remain keyboard accessible and visually match the controls. */
+.language-switch a { display:inline-block; text-decoration:none; white-space:nowrap; }

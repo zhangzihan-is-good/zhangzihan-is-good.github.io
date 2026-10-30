@@ -4,7 +4,7 @@ body { font-size: 17px; }
 .brand-zh { font-size: 12px; letter-spacing: 3px; }
 .desktop-nav a { font-size: 14px; }
 .desktop-nav .zh { font-size: 12px; }
-.language-switch button { font-size: 13px; padding: 5px 9px; }
+.language-switch :is(button,a) { font-size: 13px; padding: 5px 9px; }
 .eyebrow, .section-number { font-size: 12px; letter-spacing: 1.3px; }
 .hero .eyebrow { font-size: 12px; }
 .hero-bio, html[data-language=zh] .hero-bio .zh { font-size: 17px; }
@@ -173,7 +173,7 @@ html[data-language=zh] .pub-title-zh { font-size: 21px; }
 @media (max-width: 650px) {
   .brand { font-size: 14px; }
   .brand-zh { font-size: 11px; letter-spacing: 2px; }
-  .language-switch button { font-size: 12px; padding: 5px 7px; }
+  .language-switch :is(button,a) { font-size: 12px; padding: 5px 7px; }
   .header-tools { gap: 2px; }
   .eyebrow, .section-number, .hero .eyebrow { font-size: 11px; }
   .hero-bio, html[data-language=zh] .hero-bio .zh { font-size: 16px; }
@@ -278,7 +278,7 @@ html[data-language=zh] .pub-title-zh { font-size: 21px; }
 }
 @media (max-width: 360px) {
   .brand { font-size: 13px; }
-  .language-switch button { padding-inline: 5px; }
+  .language-switch :is(button,a) { padding-inline: 5px; }
   .button { padding-inline: 13px; gap: 12px; }
   .button .zh { font-size: 11px; }
   .hero-actions .button { font-size: 12px; padding-inline: 10px; gap: 6px; }
