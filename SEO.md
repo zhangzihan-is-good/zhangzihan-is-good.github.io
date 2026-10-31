@@ -46,7 +46,11 @@ The Chisco and AI-breast-cancer repository READMEs link to the homepage. Google 
 
 The four hobby cards live in `templates/homepage.html`, with translations in `app.js` and shared styling in `hobbies.css`. `hobbies.js` imports a single game or gallery when its card is opened; closing the panel disposes that experience. Game state and scores remain in memory and are never persisted. Fitness uses four falling-arrow lanes with slow, medium and fast settings; arena gameplay pauses only when requested or when the document is hidden.
 
-Add the owner's photography to the `photographs` array in `hobbies-photos.js`, using local image files and bilingual titles/alt text. The empty array intentionally shows an empty gallery, not sample works. See that file for the data format.
+Add the owner's photography to the `photographs` array in `hobbies-photos.js`, using local image files and bilingual titles/alt text. Five owner-supplied photographs currently use small ring previews and larger files loaded on opening; each keeps its original aspect ratio. See that file for the data format.
 
 When updating homepage content only, use `--home-lastmod YYYY-MM-DD`. The existing `--lastmod` option controls publication-page dates. Bump the homepage asset version in the generator and lazy-module version in `hobbies.js` when releasing changed code. When adding photographs, also update the photos-data import version in `hobbies-gallery.js`.
 
+
+## Writing collection
+
+The writing card is in the left column of the experience section. Its technical-writing button opens `#writing-dialog`; the 44 article titles and original links are static HTML in `templates/homepage.html`, grouped by their original publication. `writing.js` adds dialog behavior and a local title filter; `writing.css` styles it. This replaces the former Feishu navigation. Update the template and regenerate all three homepages when changing the collection.

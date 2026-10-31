@@ -104,7 +104,7 @@ function homepage(lang) {
   html = html.replace(/<html[^>]*>/,'<html lang="' + (lang === 'zh' ? 'zh-CN' : 'en') + '" data-language="' + lang + '" data-route-language="' + lang + '" data-theme="light">');
   html = html.replace(/(<([a-z0-9]+)\b[^>]*\bdata-t="([^"]+)"[^>]*>)[\s\S]*?(<\/\2>)/gi, (all,open,tag,key,close) => T[key] ? open + dual(T[key]) + close : all);
   html = html.replace(/(<h2 class="hero-statement"[^>]*>)[\s\S]*?(<\/h2>)/,'$1<span class="en" lang="en">Learning from the <em>brain.</em><br>Building for intelligence.</span><span class="zh" lang="zh-CN">向大脑学习，<br class="zh-break">探索智能的可能。</span>$2');
-  const profileLinks = {'hero-scholar':'scholar','hero-github':'github','publication-scholar':'scholar','blog-link':'blog','writing-link':'writing','footer-github':'github','footer-scholar':'scholar'};
+  const profileLinks = {'hero-scholar':'scholar','hero-github':'github','publication-scholar':'scholar','blog-link':'blog','footer-github':'github','footer-scholar':'scholar'};
   for (const [id,key] of Object.entries(profileLinks)) html=hrefForId(html,id,D.profile[key]);
   html = html.replace(/(<div class="language-switch"[^>]*>)[\s\S]*?(<\/div>)/,(_,open,close) => open + langNav(lang,prefix) + close);
   html = injectId(html,'publication-list',[...D.publications].sort((a,b)=>b.year-a.year).map(p=>pubRow(p,lang)).join('\n'));
@@ -127,7 +127,7 @@ function homepage(lang) {
   html = html.replace(/\s*<meta property="og:[^"]+"[^>]*>/g,'');
   html = html.replace(/<script>try\{const q=new URLSearchParams[\s\S]*?<\/script>/,boot(lang));
   html = html.replace(/\b(href|src)="(?!https?:|mailto:|#|\/)([^"]+)"/g,(_,attr,resource)=>attr+'="/'+resource+'"');
-  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=hobbies20261031b"');
+  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=hobbies20261031c"');
   const pageURL = absolute(prefix(lang));
   const graph = {'@context':'https://schema.org','@graph':[
     {'@type':'WebSite','@id':websiteID,url:BASE,name:'Zihan Zhang · 张梓寒',alternateName:'张梓寒个人学术主页',inLanguage:['en','zh-CN']},person,

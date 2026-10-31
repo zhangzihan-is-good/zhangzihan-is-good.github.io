@@ -173,7 +173,7 @@
     if (anchor) restoreReadingAnchor(anchor);
     hasRendered = true;
   }
-  const links = {'#hero-scholar':'scholar','#hero-github':'github','#publication-scholar':'scholar','#blog-link':'blog','#writing-link':'writing','#footer-github':'github','#footer-scholar':'scholar'};
+  const links = {'#hero-scholar':'scholar','#hero-github':'github','#publication-scholar':'scholar','#blog-link':'blog','#footer-github':'github','#footer-scholar':'scholar'};
   Object.entries(links).forEach(([s,k])=>{$(s).href=D.profile[k];});
   $('#education-list').innerHTML = D.education.map(e=>`<article class="education-item"><p class="period">${esc(e.period).replace('present','<span class="en">present</span><span class="zh">至今</span>')}</p><h4>${dual(e.school)}</h4><p class="degree">${dual(e.degree)}</p><p class="detail">${dual(e.detail)}</p></article>`).join('');
   const honorYears = [...new Set(D.honors.map(h=>h.year))];
@@ -248,6 +248,7 @@
     dialog.setAttribute('aria-labelledby',language==='zh'?'dialog-zh-label':'dialog-title');
   }
   function openPaper(id, trigger = null){
+    if(!dialog.open && document.querySelector('dialog[open]'))return;
     const p=D.publications.find(p=>p.id===id);if(!p)return;
     dialogGeneration++;dialogAnimation?.cancel();
     const wasOpen=dialog.open;
