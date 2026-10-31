@@ -208,8 +208,25 @@ html[data-language=zh] .pub-title-zh { font-size: 21px; line-height: 1.6; color:
 .writing-strip p { font-size: 14px; line-height: 1.8; }
 .writing-strip p .zh { font-size: 13px; }
 .contact-section { background: #252c26; }
-.contact-section .contact-arrow { transition: transform .25s var(--ease-out), box-shadow .25s; }
-.contact-section .contact-arrow:hover { transform: translate(3px, -3px); box-shadow: 0 7px 25px #0002; }
+.contact-section .contact-arrow { position: relative; isolation: isolate; overflow: visible; transform: none; transition: box-shadow .3s; }
+.contact-section .contact-arrow:is(:hover, :focus-visible) { transform: none; box-shadow: 0 0 30px #cfeaa522; }
+.contact-arrow-glyph { display: block; line-height: 1; transform: rotate(0deg); transition: transform .42s cubic-bezier(.2,.8,.2,1); }
+.contact-section .contact-arrow:is(:hover, :focus-visible) .contact-arrow-glyph { transform: rotate(45deg); }
+.contact-section .contact-arrow::before {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%; pointer-events: none; opacity: 0;
+  background: conic-gradient(from -90deg, transparent 0deg 276deg, #c5e7a20a 300deg, #d9f3b669 327deg, #ecffdcb3 345deg, #fff 355deg, transparent 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  filter: drop-shadow(0 0 3px #efffd9) drop-shadow(0 0 7px #c6ec98);
+  transform: rotate(0deg);
+}
+.contact-section .contact-arrow:is(:hover, :focus-visible)::before { animation: contact-light-lap 1.45s linear 1 both; }
+@keyframes contact-light-lap {
+  0% { transform: rotate(0deg); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: rotate(360deg); opacity: 0; }
+}
 .email-row { flex-wrap: wrap; }
 .email-row > a { overflow-wrap: anywhere; }
 .email-row .icon-button.is-copied { color: var(--sage); width: auto; min-width: 38px; padding-inline: 10px; font-size: 13px; }
@@ -471,4 +488,12 @@ html[data-motion-paused=true] .filter-active-indicator { transition: none; }
   .experience-heading .writing-strip { margin-top: 24px; padding: 23px; grid-template-columns: 32px minmax(0, 1fr); }
   .experience-heading .writing-strip h3 { font-size: 22px; }
   .experience-heading .writing-links { gap: 12px 24px; }
+}
+
+/* Contact motion respects the visitor's animation preferences. */
+html[data-motion-paused=true] .contact-arrow-glyph { transform: none!important; transition: none!important; }
+html[data-motion-paused=true] .contact-section .contact-arrow::before { animation: none!important; opacity: 0!important; }
+@media (prefers-reduced-motion: reduce) {
+  .contact-section .contact-arrow:is(:hover, :focus-visible) .contact-arrow-glyph { transform: none; transition: none; }
+  .contact-section .contact-arrow::before { animation: none!important; opacity: 0; }
 }
