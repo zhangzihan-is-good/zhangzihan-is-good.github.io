@@ -498,6 +498,5 @@ html[data-motion-paused=true] .contact-section .contact-arrow::before { animatio
   .contact-section .contact-arrow::before { animation: none!important; opacity: 0; }
 }
 
-/* The blog link keeps a clean hover state without duplicate underlines. */
-#blog-link, #blog-link:is(:hover, :focus-visible) { text-decoration: none; }
+/* Use the shared text-button underline, without the extra animated line. */
 #blog-link::after { content: none; }
