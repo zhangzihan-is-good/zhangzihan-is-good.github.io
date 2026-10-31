@@ -44,7 +44,7 @@ The Chisco and AI-breast-cancer repository READMEs link to the homepage. Google 
 
 ## Hobby experiences
 
-The four hobby cards live in `templates/homepage.html`, with translations in `app.js` and shared styling in `hobbies.css`. `hobbies.js` imports a single game or gallery when its card is opened; closing the panel disposes that experience. Game state and scores remain in memory and are never persisted.
+The four hobby cards live in `templates/homepage.html`, with translations in `app.js` and shared styling in `hobbies.css`. `hobbies.js` imports a single game or gallery when its card is opened; closing the panel disposes that experience. Game state and scores remain in memory and are never persisted. Fitness uses four falling-arrow lanes with slow, medium and fast settings; arena gameplay pauses only when requested or when the document is hidden.
 
 Add the owner's photography to the `photographs` array in `hobbies-photos.js`, using local image files and bilingual titles/alt text. The empty array intentionally shows an empty gallery, not sample works. See that file for the data format.
 

@@ -4,12 +4,18 @@ const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 const length = (x, y) => Math.hypot(x, y);
 const dual = (en, zh) => `<span class="en" lang="en">${en}</span><span class="zh" lang="zh-CN">${zh}</span>`;
 
-/** Preserve active wall-clock time while bounding each collision simulation step. */
+/** Physics catch-up is bounded; the round clock still consumes real active time. */
 export function simulationSteps(seconds) {
-  // A major stall offers no opportunity to react; pause instead of fast-forwarding attacks.
-  if (!Number.isFinite(seconds) || seconds < 0 || seconds > .75) return null;
-  const count = Math.ceil(seconds / (1 / 120));
-  return count ? Array.from({length: count}, () => seconds / count) : [];
+  if (!Number.isFinite(seconds) || seconds <= 0) return [];
+  // Never replay seconds of unseen attacks after a delayed animation frame.
+  const physicsSeconds = Math.min(seconds, .25);
+  const count = Math.ceil(physicsSeconds / (1 / 120));
+  return Array.from({length: count}, () => physicsSeconds / count);
+}
+
+export function advanceRoundClock(elapsed, cooldown, seconds) {
+  const activeSeconds = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
+  return {elapsed: Math.min(ROUND, elapsed + activeSeconds), cooldown: Math.max(0, cooldown - activeSeconds)};
 }
 
 export function segmentDistanceSquared(px, py, ax, ay, bx, by) {
@@ -52,8 +58,8 @@ const css = `
 .harena .ha-field{--ha-field-height:min(45dvh,420px);position:relative;display:grid;justify-items:center;background:radial-gradient(ellipse at center,#153746,#0c1c29);border-radius:0 0 14px 14px;isolation:isolate;overflow:hidden;border:1px solid #254151;box-shadow:0 18px 45px #071a2917}
 .harena .ha-canvas{width:min(100%,calc(var(--ha-field-height)*1.730769));height:auto;aspect-ratio:900/520;display:block;touch-action:none;outline-offset:-5px;cursor:crosshair}
 .harena .ha-canvas:focus-visible{outline:2px solid var(--ha-gold)}
-.harena .ha-overlay{position:absolute;inset:0;display:grid;place-items:center;padding:22px;background:#07141e5c;backdrop-filter:blur(3px);z-index:2;text-align:center;color:#e7f2f4}
-.harena .ha-overlay[hidden]{display:none}.harena .ha-panel{max-width:460px;min-width:min(300px,100%);padding:26px 34px;background:linear-gradient(145deg,#193b4aeb,#102331f5);border:1px solid #7096a454;border-radius:16px;box-shadow:0 24px 75px #0005}
+.harena .ha-overlay{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;overflow:auto;overscroll-behavior:contain;padding:22px;background:#07141e5c;backdrop-filter:blur(3px);z-index:2;text-align:center;color:#e7f2f4}
+.harena .ha-overlay[hidden]{display:none}.harena .ha-panel{width:100%;max-width:460px;min-width:0;flex-shrink:0;margin:auto;padding:26px 34px;background:linear-gradient(145deg,#193b4aeb,#102331f5);border:1px solid #7096a454;border-radius:16px;box-shadow:0 24px 75px #0005}
 .harena .ha-crest{width:42px;height:42px;margin:0 auto 16px;color:var(--ha-gold)}
 .harena .ha-panel h4{font-size:clamp(23px,4vw,35px);font-weight:550;letter-spacing:-.045em;line-height:1.22;margin:0 0 12px;font-family:var(--display,inherit)}
 .harena .ha-panel h4 .zh{display:block;font-size:.58em;letter-spacing:.06em;margin-top:7px;color:#b8cbd1}
@@ -89,6 +95,7 @@ export function mount(container, context = {}) {
   </div>`;
 
   const root = container.querySelector('.harena');
+  const keyboardScope = container.closest('dialog') || root;
   const $ = s => root.querySelector(s);
   const canvas = $('.ha-canvas'), ctx = canvas.getContext('2d');
   const overlay = $('.ha-overlay'), startButton = $('[data-start]'), pauseButton = $('[data-pause]'), dashButton = $('[data-dash]');
@@ -179,8 +186,11 @@ export function mount(container, context = {}) {
   function resize() {
     if(destroyed)return;
     const rect=canvas.getBoundingClientRect(), dpr=Math.min(window.devicePixelRatio||1,2);
+    if(rect.width<=0||rect.height<=0)return;
     pixelWidth=Math.max(1,Math.round(rect.width*dpr));pixelHeight=Math.max(1,Math.round(rect.height*dpr));
-    canvas.width=pixelWidth;canvas.height=pixelHeight;draw();
+    if(canvas.width!==pixelWidth)canvas.width=pixelWidth;
+    if(canvas.height!==pixelHeight)canvas.height=pixelHeight;
+    draw();
   }
   function updateHUD(force=false) {
     const time=(ROUND-elapsed).toFixed(1), charge=Math.ceil(cooldown*10)/10;
@@ -227,7 +237,7 @@ export function mount(container, context = {}) {
     if(hp<=0)finish(false);
   }
   function update(dt) {
-    elapsed=Math.min(ROUND,elapsed+dt);cooldown=Math.max(0,cooldown-dt);player.invincible=Math.max(0,player.invincible-dt);moveMarker=Math.max(0,moveMarker-dt*.5);
+    player.invincible=Math.max(0,player.invincible-dt);moveMarker=Math.max(0,moveMarker-dt*.5);
     let dx=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0),dy=(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0);
     const keyboard=!!(dx||dy);if(!keyboard){dx=target.x-player.x;dy=target.y-player.y;}
     const distance=length(dx,dy),step=keyboard?290*dt:Math.min(distance,290*dt);
@@ -248,13 +258,13 @@ export function mount(container, context = {}) {
     }
     hazards=hazards.filter(h=>{const done=h.type==='line'?(h.x<0||h.x>W||h.y<0||h.y>H||h.age>5):h.age>h.warning+h.active;if(done&&!h.touched)dodged++;return!done;});
     particles=particles.filter(p=>{p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;return p.life>0;});trails=trails.filter(t=>(t.life-=dt)>0);
-    if(elapsed>=ROUND-1e-7){elapsed=ROUND;finish(true);}
   }
   function frame(now) {
     raf=0;if(destroyed||mode!=='running')return;
     const delta=lastFrame?(now-lastFrame)/1000:0;lastFrame=now;
+    ({elapsed,cooldown}=advanceRoundClock(elapsed,cooldown,delta));
+    if(elapsed>=ROUND-1e-7){elapsed=ROUND;finish(true);return;}
     const steps=simulationSteps(delta);
-    if(steps===null){pause('stall');return;}
     for(const dt of steps){if(mode!=='running')break;update(dt);}
     updateHUD();draw();
     if(mode==='running')raf=requestAnimationFrame(frame);
@@ -266,7 +276,7 @@ export function mount(container, context = {}) {
   }
   function pause(automatic=false) {
     if(mode!=='running')return;mode='paused';keys.clear();cancelAnimationFrame(raf);raf=0;overlay.hidden=false;
-    title.innerHTML=dual('Take a breath.','稍作休息。');copy.innerHTML=automatic==='stall'?dual('The round paused after a long frame delay. Resume when you are ready.','页面出现较长卡顿，本局已暂停。准备好后继续。'):automatic?dual('The round paused while this tab was hidden. Resume when you are ready.','切换标签页后，本局已暂停。准备好后继续。'):dual('Your round is paused. Pick up exactly where you left off.','本局已暂停，点击继续即可回到训练场。');startButton.innerHTML=dual('Resume training','继续挑战')+' <span aria-hidden="true">↗</span>';updateHUD(true);draw();
+    title.innerHTML=dual('Take a breath.','稍作休息。');copy.innerHTML=automatic?dual('The round paused while this tab was hidden. Resume when you are ready.','切换标签页后，本局已暂停。准备好后继续。'):dual('Your round is paused. Pick up exactly where you left off.','本局已暂停，点击继续即可回到训练场。');startButton.innerHTML=dual('Resume training','继续挑战')+' <span aria-hidden="true">↗</span>';updateHUD(true);draw();
   }
   function resume() {
     if(mode!=='paused'||document.hidden)return;mode='running';overlay.hidden=true;lastFrame=performance.now();setStatus('Back in the arena. Keep moving.','回到训练场，继续移动。');updateHUD(true);canvas.focus({preventScroll:true});raf=requestAnimationFrame(frame);
@@ -285,14 +295,23 @@ export function mount(container, context = {}) {
   }
   listen(startButton,'click',()=>mode==='paused'?resume():start());
   listen(pauseButton,'click',()=>mode==='paused'?resume():pause());listen(dashButton,'click',()=>{dash();if(mode==='running')canvas.focus({preventScroll:true});});
-  listen(canvas,'pointerdown',event=>{if(mode!=='running'||(event.button!==0&&event.button!==2))return;event.preventDefault();canvas.focus({preventScroll:true});pointer=event.pointerId;canvas.setPointerCapture?.(event.pointerId);point(event);});
+  listen(canvas,'pointerdown',event=>{if(mode!=='running'||(event.button!==0&&event.button!==2))return;event.preventDefault();canvas.focus({preventScroll:true});pointer=event.pointerId;point(event);try{canvas.setPointerCapture?.(event.pointerId);}catch{/* Pointer already released; the destination remains valid. */}});
   listen(canvas,'pointermove',event=>{if(mode==='running'&&pointer===event.pointerId)point(event);});
   const release=event=>{if(pointer===event.pointerId){pointer=null;if(canvas.hasPointerCapture?.(event.pointerId))canvas.releasePointerCapture(event.pointerId);}};
-  listen(canvas,'pointerup',release);listen(canvas,'pointercancel',release);listen(canvas,'contextmenu',event=>event.preventDefault());
+  listen(canvas,'pointerup',release);listen(canvas,'pointercancel',release);listen(canvas,'lostpointercapture',()=>{pointer=null;});listen(canvas,'contextmenu',event=>event.preventDefault());
   const movement=['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'];
-  listen(root,'keydown',event=>{if(event.target!==canvas||mode!=='running')return;const key=event.key.toLowerCase();if(movement.includes(key)){event.preventDefault();keys.add(key);}else if(event.code==='Space'){event.preventDefault();if(!event.repeat)dash();}else if(key==='p'){event.preventDefault();pause();}});
-  listen(root,'keyup',event=>keys.delete(event.key.toLowerCase()));listen(canvas,'blur',()=>keys.clear());
-  listen(document,'visibilitychange',()=>{if(document.hidden)pause(true);});listen(window,'blur',()=>pause(true));
+  listen(keyboardScope,'keydown',event=>{
+    if(event.ctrlKey||event.metaKey||event.altKey||event.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;
+    const key=event.key.toLowerCase();
+    if(key==='p'&&(mode==='running'||mode==='paused')){event.preventDefault();mode==='running'?pause():resume();return;}
+    if(mode!=='running')return;
+    if(movement.includes(key)){event.preventDefault();keys.add(key);}
+    else if(event.code==='Space'&&!event.target?.closest?.('button,a')){event.preventDefault();if(!event.repeat)dash();}
+  });
+  listen(document,'keyup',event=>keys.delete(event.key.toLowerCase()));listen(canvas,'blur',()=>keys.clear());
+  listen(document,'visibilitychange',()=>{if(document.hidden)pause(true);});
+  // Changing window focus is not the same as hiding the game. Clear held keys, keep playing.
+  listen(window,'blur',()=>{keys.clear();pointer=null;});
   const resizeObserver=typeof ResizeObserver!=='undefined'?new ResizeObserver(resize):null;resizeObserver?.observe(canvas);if(!resizeObserver)listen(window,'resize',resize);
   resize();updateHUD(true);
   return {destroy(){if(destroyed)return;destroyed=true;cancelAnimationFrame(raf);raf=0;listeners.forEach(remove=>remove());resizeObserver?.disconnect();keys.clear();hazards=[];particles=[];trails=[];container.innerHTML='';}};

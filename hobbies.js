@@ -4,10 +4,10 @@ const content = document.querySelector('#hobby-dialog-content');
 const title = document.querySelector('#hobby-dialog-title');
 const kicker = document.querySelector('#hobby-dialog-kicker');
 const dual = (en, zh) => `<span class="en" lang="en">${en}</span><span class="zh" lang="zh-CN">${zh}</span>`;
-const VERSION = '20261031a';
+const VERSION = '20261031b';
 const experiences = {
   cube: { title: ['Rubik’s Cube', '魔方'], kicker: '01 / A DIFFERENT PERSPECTIVE', file: './hobbies-cube.js' },
-  fitness: { title: ['Rhythm & reps', '节奏举铁'], kicker: '02 / FIND YOUR RHYTHM', file: './hobbies-fitness.js' },
+  fitness: { title: ['Dumbbell rhythm', '箭头举铁'], kicker: '02 / FIND YOUR RHYTHM', file: './hobbies-fitness.js' },
   gallery: { title: ['Through the lens', '光影作品廊'], kicker: '03 / MOMENTS IN ORBIT', file: './hobbies-gallery.js' },
   arena: { title: ['Rift footwork', '峡谷走位挑战'], kicker: '04 / KEEP MOVING', file: './hobbies-arena.js' }
 };
