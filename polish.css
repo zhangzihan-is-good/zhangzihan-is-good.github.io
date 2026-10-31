@@ -497,3 +497,7 @@ html[data-motion-paused=true] .contact-section .contact-arrow::before { animatio
   .contact-section .contact-arrow:is(:hover, :focus-visible) .contact-arrow-glyph { transform: none; transition: none; }
   .contact-section .contact-arrow::before { animation: none!important; opacity: 0; }
 }
+
+/* The blog link keeps a clean hover state without duplicate underlines. */
+#blog-link, #blog-link:is(:hover, :focus-visible) { text-decoration: none; }
+#blog-link::after { content: none; }
