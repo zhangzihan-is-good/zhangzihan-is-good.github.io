@@ -13,7 +13,7 @@ const outputRoot = option('--output') ? path.resolve(process.cwd(), option('--ou
 const BASE = 'https://zhangzihan-is-good.github.io/';
 // Update this only when publishing actual content changes, or pass --lastmod YYYY-MM-DD.
 const lastmod = option('--lastmod') || '2026-10-30';
-const homeLastmod = option('--home-lastmod') || '2026-10-31';
+const homeLastmod = option('--home-lastmod') || '2026-11-01';
 if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) throw new Error('Invalid --lastmod date');
 if (!/^\d{4}-\d{2}-\d{2}$/.test(homeLastmod)) throw new Error('Invalid --home-lastmod date');
 const source = await fs.readFile(path.join(sourceRoot, 'content.js'), 'utf8');
@@ -38,9 +38,9 @@ function readLiteral(name, delimiter = '{', endDelimiter = '}') {
 const T = readLiteral('T');
 const HOME = readLiteral('HOME_METADATA');
 const topics = [
-  {id:'all',label:{en:'All work',zh:'全部'}}, {id:'eeg',label:{en:'EEG & BCI',zh:'脑机接口'}},
-  {id:'brain',label:{en:'Brain-inspired AI',zh:'类脑智能'}}, {id:'nlp',label:{en:'Language',zh:'语言'}},
-  {id:'medical',label:{en:'Multimodal AI',zh:'多模态'}}
+  {id:'all',label:{en:'All work',zh:'全部'}}, {id:'eeg',label:{en:'Brain–computer interfaces',zh:'脑机接口'}},
+  {id:'brain',label:{en:'Brain-inspired AI',zh:'类脑人工智能'}}, {id:'nlp',label:{en:'Language & cognition',zh:'语言与认知'}},
+  {id:'medical',label:{en:'Medical AI',zh:'医学人工智能'}}
 ];
 const languages = ['both','en','zh'];
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -68,7 +68,7 @@ const person = {
   image:absolute('/assets/portrait.jpg'),jobTitle:'Ph.D. student',
   affiliation:{'@type':'CollegeOrUniversity',name:'Harbin Institute of Technology',alternateName:'哈尔滨工业大学'},
   sameAs:[D.profile.github,D.profile.scholar,D.profile.blog].filter(Boolean),
-  knowsAbout:['Brain–computer interfaces','EEG decoding','Brain-inspired artificial intelligence','Natural language processing']
+  knowsAbout:['Brain–computer interfaces','Brain-inspired AI','Language and cognition','Medical AI']
 };
 function alternates(routes) {
   return '<link rel="alternate" hreflang="en" href="' + absolute(routes.en) + '">\n<link rel="alternate" hreflang="zh-CN" href="' + absolute(routes.zh) + '">\n<link rel="alternate" hreflang="x-default" href="' + absolute(routes.both) + '">';
@@ -127,7 +127,7 @@ function homepage(lang) {
   html = html.replace(/\s*<meta property="og:[^"]+"[^>]*>/g,'');
   html = html.replace(/<script>try\{const q=new URLSearchParams[\s\S]*?<\/script>/,boot(lang));
   html = html.replace(/\b(href|src)="(?!https?:|mailto:|#|\/)([^"]+)"/g,(_,attr,resource)=>attr+'="/'+resource+'"');
-  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=hobbies20261031d"');
+  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=research20261101"');
   const pageURL = absolute(prefix(lang));
   const graph = {'@context':'https://schema.org','@graph':[
     {'@type':'WebSite','@id':websiteID,url:BASE,name:'Zihan Zhang · 张梓寒',alternateName:'张梓寒个人学术主页',inLanguage:['en','zh-CN']},person,

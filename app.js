@@ -9,11 +9,11 @@
     navResearch:{en:'Research',zh:'研究'},navPublications:{en:'Publications',zh:'论文'},navJourney:{en:'Journey',zh:'经历'},navContact:{en:'Contact',zh:'联系'},
     heroEyebrow:{en:'Ph.D. researcher · Brain & intelligence',zh:'博士研究生 · 大脑与智能'},
     heroStatement:{en:'Learning from the brain. Building for intelligence.',zh:'向大脑学习，探索智能的可能。'},
-    bio:{en:'I am a Ph.D. student at Harbin Institute of Technology (SCIR). My research connects brain–computer interfaces, brain-inspired AI, and natural language processing.',zh:'我是哈尔滨工业大学 SCIR 实验室博士生，研究脑机接口、类脑人工智能与自然语言处理。'},
+    bio:{en:'I am a Ph.D. student at Harbin Institute of Technology (SCIR). My research spans brain–computer interfaces, brain-inspired AI, language and cognition, and medical AI.',zh:'我是哈尔滨工业大学 SCIR 实验室博士生，研究脑机接口、类脑人工智能、语言与认知及医学人工智能。'},
     exploreWork:{en:'Explore my work',zh:'探索研究'},emailLink:{en:'Email ↗',zh:'邮箱 ↗'},portraitFoot:{en:'Curiosity across disciplines.',zh:'保持好奇，跨越学科。'},
     hit:{en:'Harbin Institute of Technology',zh:'哈尔滨工业大学'},hitDetail:{en:'Ph.D. · SCIR · 2023–present',zh:'计算机科学与技术 · 博士'},ntu:{en:'Nanyang Technological University',zh:'南洋理工大学'},ntuDetail:{en:'CSC Visiting Ph.D. · 2026–2027',zh:'认知神经科学 · 联合培养'},
-    researchTitle:{en:'A connected perspective.',zh:'研究方向'},researchIntro:{en:'At the intersection of biological intelligence and machine learning.',zh:'在生物智能与机器学习的交汇处，探索信号、认知与语言。'},
-    topicEEG:{en:'Brain–computer interfaces',zh:'脑机接口'},topicBrain:{en:'Brain-inspired AI',zh:'类脑人工智能'},topicNLP:{en:'Language & cognition',zh:'语言与认知'},topicMedical:{en:'Multimodal AI',zh:'多模态人工智能'},clickDirection:{en:'Select a node to explore',zh:'点击节点探索研究'},researchFocus:{en:'Research focus',zh:'研究主题'},relatedWork:{en:'Explore related work',zh:'浏览相关成果'},
+    researchTitle:{en:'A connected perspective.',zh:'研究方向'},researchIntro:{en:'Connecting biological intelligence and machine learning, from brain signals and cognition to medical applications.',zh:'在生物智能与机器学习的交汇处，探索信号、认知、语言与医学应用。'},
+    topicEEG:{en:'Brain–computer interfaces',zh:'脑机接口'},topicBrain:{en:'Brain-inspired AI',zh:'类脑人工智能'},topicNLP:{en:'Language & cognition',zh:'语言与认知'},topicMedical:{en:'Medical AI',zh:'医学人工智能'},clickDirection:{en:'Select a node to explore',zh:'点击节点探索研究'},researchFocus:{en:'Research focus',zh:'研究主题'},relatedWork:{en:'Explore related work',zh:'浏览相关成果'},
     publicationsTitle:{en:'Ideas into research.',zh:'科研成果'},scholarProfile:{en:'Google Scholar profile',zh:'谷歌学术'},year:{en:'Year',zh:'年份'},resetFilters:{en:'Reset filters',zh:'重置筛选'},publicationNote:{en:'Click a title to explore the work',zh:'点击标题查看研究介绍'},noResults:{en:'No matching publications.',zh:'暂无符合条件的论文。'},noResultsHint:{en:'Try a different keyword, topic, or year.',zh:'试试其他关键词、方向或年份。'},
     journeyTitle:{en:'The path so far.',zh:'教育与荣誉'},journeyIntro:{en:'From computer science to cognitive neuroscience. Always learning.',zh:'从计算机科学到认知神经科学，在探索中不断学习。'},educationTitle:{en:'Education',zh:'教育经历'},honorsTitle:{en:'Honors & support',zh:'荣誉与资助'},honorsFoot:{en:'With gratitude for the people and institutions supporting this journey.',zh:'感谢求学路上给予支持的人与机构。'},
     experienceTitle:{en:'Research is only part of the story.',zh:'科研之外'},experienceIntro:{en:'Teaching, reviewing, writing, and sharing what I learn along the way.',zh:'参与教学与审稿，写下思考，也分享所学。'},toolbox:{en:'My toolbox',zh:'工具与技能'},
@@ -22,31 +22,31 @@
     hobbyCubeLevel:{en:'Advanced amateur',zh:'业余高级'},hobbyFitnessLevel:{en:'Beginner',zh:'小白'},hobbyGalleryLevel:{en:'Beginner',zh:'小白'},hobbyArenaLevel:{en:'Diamond',zh:'钻石'},
     hobbyPlay:{en:'Let’s play',zh:'开始玩'},hobbyExplore:{en:'View gallery',zh:'浏览作品'},
     writingTitle:{en:'Making ideas accessible.',zh:'让知识被更多人看见'},writingIntro:{en:'Technology writing as Zicy · 200,000+ cumulative reads.',zh:'笔名 Zicy · 技术文章累计阅读量 20 万+'},blog:{en:'Personal blog',zh:'个人博客'},techWriting:{en:'Selected writing',zh:'技术文章'},
-    contactTitle:{en:'Let’s connect.',zh:'聊聊研究与想法'},contactIntro:{en:'Interested in brain-inspired intelligence, BCI, or language? I would love to exchange ideas.',zh:'如果你也关注类脑智能、脑机接口或语言研究，欢迎交流。'},backTop:{en:'Back to top ↑',zh:'返回顶部 ↑'},footerNote:{en:'Built with curiosity.',zh:'保持好奇。'},paperDetails:{en:'Research overview',zh:'研究介绍'}
+    contactTitle:{en:'Let’s connect.',zh:'聊聊研究与想法'},contactIntro:{en:'Interested in brain–computer interfaces, brain-inspired AI, language and cognition, or medical AI? I would love to exchange ideas.',zh:'如果你也关注脑机接口、类脑人工智能、语言与认知或医学人工智能，欢迎交流。'},backTop:{en:'Back to top ↑',zh:'返回顶部 ↑'},footerNote:{en:'Built with curiosity.',zh:'保持好奇。'},paperDetails:{en:'Research overview',zh:'研究介绍'}
   };
   const HOME_METADATA = {
     both: {
       title: '张梓寒 Zihan Zhang | 哈尔滨工业大学 | 脑机接口与类脑智能',
-      description: '张梓寒 Zihan Zhang，哈尔滨工业大学（HIT）SCIR 博士生，研究脑机接口、EEG解码、类脑人工智能与自然语言处理。',
+      description: '张梓寒 Zihan Zhang，哈尔滨工业大学（HIT）SCIR 博士生，研究脑机接口、类脑人工智能、语言与认知及医学人工智能。',
       locale: 'en_US'
     },
     en: {
       title: 'Zihan Zhang | Harbin Institute of Technology | BCI & Brain-Inspired AI',
-      description: 'Zihan Zhang is a Ph.D. student at Harbin Institute of Technology (SCIR), researching EEG decoding, brain–computer interfaces, brain-inspired AI, and NLP.',
+      description: 'Zihan Zhang is a Ph.D. student at Harbin Institute of Technology (SCIR), researching brain–computer interfaces, brain-inspired AI, language and cognition, and medical AI.',
       locale: 'en_US'
     },
     zh: {
       title: '张梓寒 | 哈尔滨工业大学 | 脑机接口与类脑智能',
-      description: '张梓寒，哈尔滨工业大学社会计算与交互机器人研究中心（SCIR）博士生，研究脑机接口、EEG解码、类脑人工智能与自然语言处理。',
+      description: '张梓寒，哈尔滨工业大学社会计算与交互机器人研究中心（SCIR）博士生，研究脑机接口、类脑人工智能、语言与认知及医学人工智能。',
       locale: 'zh_CN'
     }
   };
   const topics = [
     {id:'all',label:{en:'All work',zh:'全部'}},
-    {id:'eeg',label:{en:'EEG & BCI',zh:'脑机接口'}},
-    {id:'brain',label:{en:'Brain-inspired AI',zh:'类脑智能'}},
-    {id:'nlp',label:{en:'Language',zh:'语言'}},
-    {id:'medical',label:{en:'Multimodal AI',zh:'多模态'}}
+    {id:'eeg',label:{en:'Brain–computer interfaces',zh:'脑机接口'}},
+    {id:'brain',label:{en:'Brain-inspired AI',zh:'类脑人工智能'}},
+    {id:'nlp',label:{en:'Language & cognition',zh:'语言与认知'}},
+    {id:'medical',label:{en:'Medical AI',zh:'医学人工智能'}}
   ];
   const validLanguages = ['zh','en','both'];
   const canonicalOrigin = 'https://zhangzihan-is-good.github.io';

@@ -117,9 +117,9 @@ window.PROFILE_DATA = {
   ],
   interests: {zh:['技术分享','魔方','健身','摄影'],en:['Technology writing','Rubik’s Cube','Fitness','Photography']},
   research: [
-    {id:'eeg',title:{zh:'脑机接口与EEG解码',en:'Brain–Computer Interfaces'},detail:{zh:'探索从EEG信号中解码语言、想象言语与情绪信息。',en:'Exploring language, imagined-speech, and emotion decoding from EEG signals.'},topics:['eeg']},
-    {id:'brain',title:{zh:'类脑人工智能',en:'Brain-Inspired Intelligence'},detail:{zh:'从脑与认知科学中寻找深度学习模型和方法的设计启发。',en:'Drawing on brain and cognitive science to inform deep-learning models and methods.'},topics:['brain']},
-    {id:'nlp',title:{zh:'自然语言处理',en:'Natural Language Processing'},detail:{zh:'研究语言表征、时序关系以及语言与脑信号之间的联系。',en:'Studying language representations, temporal relations, and connections between language and brain signals.'},topics:['nlp']},
-    {id:'medical',title:{zh:'多模态人工智能',en:'Multimodal AI'},detail:{zh:'结合不同模态的信息，探索人工智能在医学检测等任务中的应用。',en:'Combining information across modalities for applications including medical detection.'},topics:['medical']}
+    {id:'eeg',title:{zh:'脑机接口',en:'Brain–computer interfaces'},detail:{zh:'探索从EEG信号中解码语言、想象言语与情绪信息。',en:'Exploring language, imagined-speech, and emotion decoding from EEG signals.'},topics:['eeg']},
+    {id:'brain',title:{zh:'类脑人工智能',en:'Brain-inspired AI'},detail:{zh:'从脑与认知科学中寻找深度学习模型和方法的设计启发。',en:'Drawing on brain and cognitive science to inform deep-learning models and methods.'},topics:['brain']},
+    {id:'nlp',title:{zh:'语言与认知',en:'Language & cognition'},detail:{zh:'研究语言表征、时序关系以及语言与脑信号之间的联系。',en:'Studying language representations, temporal relations, and connections between language and brain signals.'},topics:['nlp']},
+    {id:'medical',title:{zh:'医学人工智能',en:'Medical AI'},detail:{zh:'面向医学检测与辅助诊断任务，探索机器学习方法及其应用。',en:'Developing and applying machine learning for medical detection and computer-aided diagnosis.'},topics:['medical']}
   ]
 };
