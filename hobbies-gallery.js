@@ -1,4 +1,4 @@
-import { photographs } from './hobbies-photos.js?v=20261031c';
+import { photographs } from './hobbies-photos.js?v=20261031d';
 
 const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 const dual = (en, zh) => `<span class="en" lang="en">${escapeHTML(en)}</span><span class="zh" lang="zh-CN">${escapeHTML(zh)}</span>`;

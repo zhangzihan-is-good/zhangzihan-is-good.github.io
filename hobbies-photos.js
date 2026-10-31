@@ -15,7 +15,7 @@ export const photographs = [
     src: '/assets/photos/quiet-cat-preview.webp',
     fullSrc: '/assets/photos/quiet-cat-large.webp',
     width: 1600, height: 1200,
-    title: { en: 'A quiet companion', zh: '安静的陪伴' },
+    title: { en: 'Little win', zh: '小win' },
     alt: { en: 'A round-eyed tabby cat resting on a bed.', zh: '一只圆眼睛的虎斑猫安静地趴在床上。' }
   },
   {
@@ -36,7 +36,7 @@ export const photographs = [
     src: '/assets/photos/stained-glass-preview.webp',
     fullSrc: '/assets/photos/stained-glass-large.webp',
     width: 1600, height: 1067,
-    title: { en: 'Light through glass', zh: '光落在彩窗上' },
+    title: { en: 'Sagrada Família', zh: '圣家堂' },
     alt: { en: 'Warm light through tall stained-glass windows, framed by columns and a visitor’s silhouette.', zh: '暖光透过高大的彩色玻璃窗，立柱与参观者的剪影在前景交错。' }
   }
 ];

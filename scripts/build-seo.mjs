@@ -113,7 +113,7 @@ function homepage(lang) {
   html = injectId(html,'education-list',D.education.map(e=>'<article class="education-item"><p class="period">'+period(e.period)+'</p><h4>'+dual(e.school)+'</h4><p class="degree">'+dual(e.degree)+'</p><p class="detail">'+dual(e.detail)+'</p></article>').join('\n'));
   html = injectId(html,'honors-list',[...new Set(D.honors.map(h=>h.year))].map(year=>'<div class="honor-group"><div class="honor-year">'+year+'</div><div class="honor-items">'+D.honors.filter(h=>h.year===year).map(h=>'<div class="honor-item"><div class="title">'+dual(h.title)+'</div></div>').join('')+'</div></div>').join(''));
   html = injectId(html,'skills-list',D.skills.map((s,i)=>'<div class="skill-item"><button type="button" class="skill-chip" aria-expanded="false" aria-controls="skill-tip-'+i+'">'+esc(s.name)+'</button><span class="skill-tip" id="skill-tip-'+i+'" hidden>'+dual(s.level)+'</span></div>').join(''));
-  html = injectId(html,'experience-list',D.experience.map((e,i)=>'<details class="experience-item" data-expanded="'+(i===0)+'"'+(i===0?' open':'')+'><summary aria-expanded="'+(i===0)+'"><div><span class="period">'+period(e.period)+'</span><span class="title">'+dual(e.title)+'</span></div><span class="expand-icon" aria-hidden="true">'+(i===0?'−':'+')+'</span></summary><div class="experience-content"><div class="experience-detail">'+dual(e.detail)+'</div></div></details>').join(''));
+  html = injectId(html,'experience-list',D.experience.map(e=>'<details class="experience-item" data-expanded="false"><summary aria-expanded="false"><div><span class="period">'+period(e.period)+'</span><span class="title">'+dual(e.title)+'</span></div><span class="expand-icon" aria-hidden="true">+</span></summary><div class="experience-content"><div class="experience-detail">'+dual(e.detail)+'</div></div></details>').join(''));
   const first = D.research[0];
   html = injectId(html,'direction-title',dual(first.title));
   html = injectId(html,'direction-detail',dual(first.detail));
@@ -127,7 +127,7 @@ function homepage(lang) {
   html = html.replace(/\s*<meta property="og:[^"]+"[^>]*>/g,'');
   html = html.replace(/<script>try\{const q=new URLSearchParams[\s\S]*?<\/script>/,boot(lang));
   html = html.replace(/\b(href|src)="(?!https?:|mailto:|#|\/)([^"]+)"/g,(_,attr,resource)=>attr+'="/'+resource+'"');
-  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=hobbies20261031c"');
+  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=hobbies20261031d"');
   const pageURL = absolute(prefix(lang));
   const graph = {'@context':'https://schema.org','@graph':[
     {'@type':'WebSite','@id':websiteID,url:BASE,name:'Zihan Zhang · 张梓寒',alternateName:'张梓寒个人学术主页',inLanguage:['en','zh-CN']},person,

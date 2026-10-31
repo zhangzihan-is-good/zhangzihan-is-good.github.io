@@ -54,3 +54,5 @@ When updating homepage content only, use `--home-lastmod YYYY-MM-DD`. The existi
 ## Writing collection
 
 The writing card is in the left column of the experience section. Its technical-writing button opens `#writing-dialog`; the 44 article titles and original links are static HTML in `templates/homepage.html`, grouped by their original publication. `writing.js` adds dialog behavior and a local title filter; `writing.css` styles it. This replaces the former Feishu navigation. Update the template and regenerate all three homepages when changing the collection.
+
+Hobby card artwork is in `assets/hobbies/`; its README records the generated asset prompts and official game-icon source. Experience accordions start collapsed in both app rendering and pre-rendered HTML.
