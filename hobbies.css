@@ -1,0 +1,80 @@
+.hobbies-section{padding-top:12px;padding-bottom:100px;--hobby-shadow:0 20px 60px #3427500b}
+.hobbies-section .section-heading{align-items:flex-end;gap:36px;margin-bottom:32px}
+.hobbies-section .section-intro{max-width:370px;line-height:1.8}
+.hobby-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.hobby-card{position:relative;isolation:isolate;overflow:hidden;min-width:0;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:var(--hobby-shadow);transition:transform .3s,border-color .3s,box-shadow .3s}
+.hobby-card:hover{transform:translateY(-4px);box-shadow:0 25px 60px #34275012;border-color:color-mix(in srgb,var(--card-accent) 35%,var(--line))}
+.hobby-card-cube{--card-accent:#7962d5;--card-tint:#efebfc;--card-art-ink:#4b3b84}
+.hobby-card-fitness{--card-accent:#b96848;--card-tint:#f8ede4;--card-art-ink:#87533e}
+.hobby-card-gallery{--card-accent:#a58cce;--card-tint:#252437;--card-art-ink:#d8c8f2}
+.hobby-card-arena{--card-accent:#438c88;--card-tint:#e7f0e9;--card-art-ink:#2c6261}
+.hobby-card-top{padding:25px 28px 0;display:flex;justify-content:space-between;align-items:center;gap:15px;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:1.8px}
+.hobby-card-top .hobby-card-index{font-size:11px;letter-spacing:1px;opacity:.65}
+.hobby-card-heading{padding:17px 28px 0;position:relative;z-index:2}
+.hobby-card h3{font-size:29px;letter-spacing:-.9px;line-height:1.25}
+.hobby-card h3 .zh{display:block;font-size:17px;font-weight:500;color:var(--muted);letter-spacing:.5px;margin-top:7px}
+.hobby-card-note{color:var(--muted);font-size:13px;line-height:1.6;margin-top:12px;min-height:42px}
+.hobby-card-note .zh{display:block;font-size:12px;margin-top:3px}
+.hobby-art{height:235px;position:relative;display:grid;place-items:center;margin:10px 20px 0;overflow:hidden;border-radius:14px;background:radial-gradient(ellipse at 50% 54%,var(--card-tint),transparent 69%);color:var(--card-art-ink)}
+.hobby-art svg{width:100%;height:100%;max-width:410px;transition:transform .6s cubic-bezier(.2,.65,.3,1);overflow:visible}
+.hobby-card:hover .hobby-art-cube svg{transform:rotate(-5deg) translateY(-5px)}
+.hobby-card:hover .hobby-art-fitness .cover-barbell{transform:translateY(-8px)}
+.hobby-card:hover .hobby-art-arena .cover-player{transform:translate(10px,-10px)}
+.cover-barbell,.cover-player{transition:transform .55s cubic-bezier(.2,.65,.3,1)}
+.hobby-card-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 28px;padding:20px 0 23px;border-top:1px solid var(--line)}
+.hobby-card-tag{font-size:11px;color:var(--muted);line-height:1.5}
+.hobby-card-tag .zh{display:block;font-size:11px;margin-top:3px}
+.hobby-open{display:inline-flex;gap:13px;align-items:center;min-height:44px;border:1px solid var(--line);border-radius:9px;background:var(--surface);padding:9px 12px;color:var(--ink);font-size:12px;font-weight:600;transition:background .2s,color .2s;flex-shrink:0}
+.hobby-open>span:first-child .zh{display:block;font-size:10px;font-weight:400;margin-top:2px}
+.hobby-open>span:last-child{font-size:20px;font-weight:400;line-height:1}
+.hobby-open:hover{background:var(--card-accent);border-color:var(--card-accent);color:#fff}
+.hobby-open:disabled{opacity:.5;cursor:default}
+.hobby-js-note{font-size:13px;color:var(--muted);margin-top:20px}
+.hobby-js-note .zh{display:block;margin-top:4px}
+.hobbies-ready .hobby-js-note{display:none}
+.hobby-art-gallery{background:radial-gradient(ellipse at 50% 60%,#66548188,transparent 66%),linear-gradient(130deg,#222337,#323043);height:235px;perspective:700px;margin-bottom:0}
+.photo-orbit-cover{position:absolute;width:280px;height:145px;transform-style:preserve-3d;transform:rotateX(-9deg) rotateY(-14deg);transition:transform .8s}
+.hobby-card-gallery:hover .photo-orbit-cover{transform:rotateX(-9deg) rotateY(8deg)}
+.photo-orbit-cover i{position:absolute;left:90px;top:9px;width:100px;height:128px;border:1px solid #e6d9ff66;border-radius:5px;background:linear-gradient(160deg,#c3b4db13,#1b1c2e99);box-shadow:0 7px 20px #10121a88;transform:rotateY(var(--orbit-angle)) translateZ(133px);backface-visibility:hidden;display:grid;place-items:center}
+.photo-orbit-cover i:before{content:'';position:absolute;inset:7px;border:1px solid #ddd0f128}
+.photo-orbit-cover i:after{content:'+';font-style:normal;color:#e3d5ff88;font-size:21px;font-weight:200}
+.photo-cover-floor{position:absolute;width:270px;height:100px;border:1px solid #c3aedc33;border-radius:50%;transform:translateY(69px) rotateX(62deg);box-shadow:0 0 40px #b290d61a}
+.photo-cover-caption{position:absolute;bottom:13px;font-size:9px;letter-spacing:.5px;color:#e5dcec;text-align:center}
+.photo-cover-caption .zh{font-size:10px;margin-left:7px}
+html[data-language=zh] .hobbies-section.section h2>.zh{font-size:38px}
+html[data-language=zh] .hobby-card h3 .zh{font-size:29px;font-weight:650;color:var(--ink);margin:0;letter-spacing:-.5px}
+html[data-language=zh] .hobby-card-note .zh{font-size:14px;margin:0}
+html[data-language=zh] .hobby-open>span:first-child .zh{font-size:13px;font-weight:600;margin:0}
+html[data-language=zh] .hobby-card-tag .zh{font-size:12px;margin:0}
+html[data-theme=dark] .hobby-card-cube{--card-tint:#54437645;--card-art-ink:#b5a8e4}
+html[data-theme=dark] .hobby-card-fitness{--card-tint:#71472c45;--card-art-ink:#d5a384}
+html[data-theme=dark] .hobby-card-arena{--card-tint:#26514c55;--card-art-ink:#83c3b4}
+.hobby-dialog{padding:0;width:min(1040px,calc(100% - 40px));max-height:92dvh;border-radius:20px;overflow:auto;overscroll-behavior:contain;box-shadow:0 30px 120px #17152650}
+.hobby-dialog::backdrop{background:#161624b0;backdrop-filter:blur(12px)}
+.hobby-dialog-header{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:20px;background:var(--surface);border-bottom:1px solid var(--line);padding:20px 28px}
+.hobby-dialog-header .eyebrow{font-size:9px;letter-spacing:1.7px;color:var(--purple)}
+#hobby-dialog-title{display:flex;align-items:baseline;gap:14px;font-size:24px;line-height:1.3;letter-spacing:-.5px;margin-top:7px}
+#hobby-dialog-title .zh{font-size:17px;font-weight:500;color:var(--muted);letter-spacing:0}
+html[data-language=zh] #hobby-dialog-title .zh{font-size:24px;color:var(--ink);font-weight:650}
+#hobby-dialog-close{border:1px solid var(--line);border-radius:50%;font-size:29px;line-height:1;width:40px;height:40px;flex-shrink:0}
+#hobby-dialog-close:hover{background:var(--soft)}
+.hobby-dialog-content{padding:24px 28px 28px;min-height:430px}
+.hobby-loading{min-height:380px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;font-size:15px;color:var(--muted)}
+.hobby-loading .zh{font-size:14px}
+.hobby-loading-orbit{width:38px;height:38px;border:1px solid var(--line);border-top:2px solid var(--purple);border-radius:50%;animation:hobby-spin 1s linear infinite;margin-bottom:8px}
+@keyframes hobby-spin{to{transform:rotate(360deg)}}
+.hgame-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hgame-button{min-height:43px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:9px 15px;font-size:13px;line-height:1.45;font-weight:550;transition:background .18s,transform .18s}
+.hgame-button:hover:not(:disabled){background:var(--soft);transform:translateY(-1px)}
+.hgame-button:disabled{opacity:.5}
+.hgame-button.primary,.hgame-button[data-primary]{background:var(--purple);border-color:var(--purple);color:white}
+.hgame-button .zh{font-size:12px;margin-left:6px}
+.hgame-stat{padding:10px 15px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:13px}
+.hgame-instructions{font-size:13px;line-height:1.8;color:var(--muted)}
+.hgame-instructions .zh{display:block;font-size:13px;margin-top:3px}
+html[data-language=zh] .hgame-button .zh{font-size:13px;margin:0}
+@media(max-width:900px){.hobby-card-top{padding:22px 23px 0}.hobby-card-heading{padding:15px 23px 0}.hobby-card h3{font-size:25px}.hobby-card-bottom{margin-inline:23px}.hobby-card-note{font-size:12px}.hobby-art{margin-inline:12px;height:210px}.hobby-grid{gap:20px}.hobby-open{gap:9px}.hobby-card-tag{max-width:120px}.hobbies-section{padding-bottom:75px}}
+@media(max-width:650px){.hobbies-section{padding-top:0;padding-bottom:60px}.hobby-grid{grid-template-columns:1fr;gap:22px}.hobbies-section .section-heading{margin-bottom:25px}.hobbies-section .section-intro{max-width:none}.hobby-card h3{font-size:28px}.hobby-card h3 .zh{font-size:16px}.hobby-card-note{font-size:14px;min-height:0}.hobby-card-note .zh{font-size:13px}.hobby-art{height:235px;margin-top:12px;margin-inline:16px}.hobby-card-bottom{padding-block:17px 20px}.hobby-card-top{padding-top:22px;font-size:9px}.hobby-card-tag{max-width:none}.hobby-dialog{width:calc(100% - 14px);max-height:96dvh;border-radius:14px}.hobby-dialog-header{padding:15px 17px;gap:10px}.hobby-dialog-header .eyebrow{font-size:8px;letter-spacing:1px}#hobby-dialog-title{font-size:20px;gap:8px;flex-wrap:wrap}#hobby-dialog-title .zh{font-size:15px}.hobby-dialog-content{padding:17px 14px 20px;min-height:400px}#hobby-dialog-close{height:36px;width:36px;font-size:27px}html[data-language=zh] .hobbies-section.section h2>.zh{font-size:30px}html[data-language=zh] .hobby-card h3 .zh{font-size:28px}.hgame-button{min-height:44px;padding:9px 12px}.hgame-button .zh{display:block;margin:1px 0 0;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.hobby-card,.hobby-art svg,.photo-orbit-cover,.cover-barbell,.cover-player,.hgame-button{transition:none!important}.hobby-loading-orbit{animation:none}}
+html[data-motion-paused=true] .hobby-card,html[data-motion-paused=true] .hobby-art svg,html[data-motion-paused=true] .photo-orbit-cover,html[data-motion-paused=true] .cover-barbell,html[data-motion-paused=true] .cover-player{transition:none}
+@media print{.hobbies-section,.hobby-dialog{display:none!important}}

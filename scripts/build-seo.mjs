@@ -13,7 +13,9 @@ const outputRoot = option('--output') ? path.resolve(process.cwd(), option('--ou
 const BASE = 'https://zhangzihan-is-good.github.io/';
 // Update this only when publishing actual content changes, or pass --lastmod YYYY-MM-DD.
 const lastmod = option('--lastmod') || '2026-10-30';
+const homeLastmod = option('--home-lastmod') || '2026-10-31';
 if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) throw new Error('Invalid --lastmod date');
+if (!/^\d{4}-\d{2}-\d{2}$/.test(homeLastmod)) throw new Error('Invalid --home-lastmod date');
 const source = await fs.readFile(path.join(sourceRoot, 'content.js'), 'utf8');
 const sandbox = {window: {}};
 vm.runInNewContext(source, sandbox, {timeout: 1000});
@@ -125,7 +127,7 @@ function homepage(lang) {
   html = html.replace(/\s*<meta property="og:[^"]+"[^>]*>/g,'');
   html = html.replace(/<script>try\{const q=new URLSearchParams[\s\S]*?<\/script>/,boot(lang));
   html = html.replace(/\b(href|src)="(?!https?:|mailto:|#|\/)([^"]+)"/g,(_,attr,resource)=>attr+'="/'+resource+'"');
-  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=seo20261030"');
+  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=hobbies20261031"');
   const pageURL = absolute(prefix(lang));
   const graph = {'@context':'https://schema.org','@graph':[
     {'@type':'WebSite','@id':websiteID,url:BASE,name:'Zihan Zhang · 张梓寒',alternateName:'张梓寒个人学术主页',inLanguage:['en','zh-CN']},person,
@@ -162,6 +164,6 @@ for (const lang of languages) {
     outputPaths.push(route);
   }
 }
-await write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+outputPaths.map(route=>'  <url><loc>'+esc(absolute(route))+'</loc><lastmod>'+lastmod+'</lastmod></url>').join('\n')+'\n</urlset>\n');
+await write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+outputPaths.map(route=>'  <url><loc>'+esc(absolute(route))+'</loc><lastmod>'+(['/','/en/','/zh/'].includes(route)?homeLastmod:lastmod)+'</lastmod></url>').join('\n')+'\n</urlset>\n');
 await write('robots.txt','User-agent: *\nAllow: /\n\nSitemap: '+BASE+'sitemap.xml\n');
 console.log(JSON.stringify({output:outputRoot,pages:outputPaths.length,languages,publications:D.publications.length,lastmod}));

@@ -42,3 +42,11 @@ Do not add placeholder verification tokens. Publication metadata uses existing c
 
 The Chisco and AI-breast-cancer repository READMEs link to the homepage. Google Scholar, GitHub profile website fields, and any school or laboratory profile should use the same canonical homepage when the owner can edit them.
 
+## Hobby experiences
+
+The four hobby cards live in `templates/homepage.html`, with translations in `app.js` and shared styling in `hobbies.css`. `hobbies.js` imports a single game or gallery when its card is opened; closing the panel disposes that experience. Game state and scores remain in memory and are never persisted.
+
+Add the owner's photography to the `photographs` array in `hobbies-photos.js`, using local image files and bilingual titles/alt text. The empty array intentionally shows an empty gallery, not sample works. See that file for the data format.
+
+When updating homepage content only, use `--home-lastmod YYYY-MM-DD`. The existing `--lastmod` option controls publication-page dates. Bump the homepage asset version in the generator and lazy-module version in `hobbies.js` when releasing changed code. When adding photographs, also update the photos-data import version in `hobbies-gallery.js`.
+
