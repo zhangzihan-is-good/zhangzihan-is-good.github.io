@@ -17,6 +17,7 @@
       <defs>
         <radialGradient id="zz-signal-aura"><stop stop-color="currentColor" stop-opacity=".19"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></radialGradient>
       </defs>
+      <g class="signal-atmosphere">
       <circle class="signal-aura" cx="336" cy="142" r="172"/>
       <g class="signal-ambient-lines">
         <path d="M25 264C82 264 73 107 129 107M333 95C392 95 375 260 432 260"/>
@@ -28,7 +29,8 @@
         <circle cx="378" cy="135" r="3"/><circle cx="412" cy="165" r="3"/><circle cx="381" cy="204" r="3"/><circle cx="410" cy="212" r="2"/>
         <circle cx="46" cy="158" r="3"/><circle cx="74" cy="310" r="3"/><circle cx="398" cy="317" r="3"/>
       </g>
-      <g class="signal-pipeline">
+      </g>
+      <g class="signal-pipeline" transform="translate(16 0)">
         <path class="signal-track" d="M24 414H38L44 407L50 425L57 397L64 422L71 414H113C141 414 146 414 170 414M170 414L199 402L227 414L199 426L170 414M199 402L199 426M227 414H297M297 414H324"/>
         <path class="signal-flow" pathLength="100" d="M24 414H38L44 407L50 425L57 397L64 422L71 414H113C141 414 146 414 170 414L199 402L227 414H297H324"/>
         <g class="signal-pipeline-nodes"><circle cx="170" cy="414" r="4"/><circle cx="199" cy="402" r="4"/><circle cx="199" cy="426" r="4"/><circle cx="227" cy="414" r="4"/></g>
