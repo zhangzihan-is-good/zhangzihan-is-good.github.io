@@ -29,10 +29,10 @@
         <circle cx="46" cy="158" r="3"/><circle cx="74" cy="310" r="3"/><circle cx="398" cy="317" r="3"/>
       </g>
       <g class="signal-pipeline">
-        <path class="signal-track" d="M24 408H38L44 401L50 419L57 391L64 416L71 408H113C141 408 146 408 170 408M170 408L199 390L227 408L199 426L170 408M199 390L199 426M227 408H297M297 408H324"/>
-        <path class="signal-flow" pathLength="100" d="M24 408H38L44 401L50 419L57 391L64 416L71 408H113C141 408 146 408 170 408L199 390L227 408H297H324"/>
-        <g class="signal-pipeline-nodes"><circle cx="170" cy="408" r="4"/><circle cx="199" cy="390" r="4"/><circle cx="199" cy="426" r="4"/><circle cx="227" cy="408" r="4"/></g>
-        <rect class="signal-language-token" x="324" y="392" width="109" height="33" rx="8"/>
+        <path class="signal-track" d="M24 414H38L44 407L50 425L57 397L64 422L71 414H113C141 414 146 414 170 414M170 414L199 402L227 414L199 426L170 414M199 402L199 426M227 414H297M297 414H324"/>
+        <path class="signal-flow" pathLength="100" d="M24 414H38L44 407L50 425L57 397L64 422L71 414H113C141 414 146 414 170 414L199 402L227 414H297H324"/>
+        <g class="signal-pipeline-nodes"><circle cx="170" cy="414" r="4"/><circle cx="199" cy="402" r="4"/><circle cx="199" cy="426" r="4"/><circle cx="227" cy="414" r="4"/></g>
+        <rect class="signal-language-token" x="324" y="400" width="80" height="28" rx="7"/>
       </g>`;
     surface.prepend(art);
     const labels = document.createElement('div');

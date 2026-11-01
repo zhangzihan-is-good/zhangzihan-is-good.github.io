@@ -9,7 +9,7 @@
   border-radius: 24px 24px 74px 24px;
   perspective: 1000px;
   isolation: isolate;
-  min-height: 440px;
+  min-height: 456px;
 }
 .signal-redesigned .portrait-orbits,
 .signal-redesigned .floating-label,
@@ -17,15 +17,15 @@
 .signal-redesigned .portrait-topline { position: relative; z-index: 2; color: var(--muted); font-size: 10px; letter-spacing: 1px; padding: 22px; }
 .signal-redesigned .portrait {
   z-index: 2;
-  top: 65px;
+  top: 53px;
   width: 216px;
   border-radius: 7px;
   transform: translateX(-50%) rotate(-3deg) rotateX(var(--portrait-x)) rotateY(var(--portrait-y));
   transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s;
   box-shadow: 0 16px 40px color-mix(in srgb, var(--purple) 12%, transparent), 0 3px 8px color-mix(in srgb, var(--ink) 8%, transparent);
 }
-.signal-redesigned .portrait img { border-radius: 3px; filter: saturate(.82); }
-.signal-redesigned .portrait figcaption { padding-block: 10px; flex-direction: column; align-items: flex-start; gap: 3px; }
+.signal-redesigned .portrait img { height: 255px; border-radius: 3px; filter: saturate(.82); }
+.signal-redesigned .portrait figcaption { padding-block: 10px; flex-direction: column; align-items: flex-start; gap: 3px; line-height: 1.35; }
 .signal-redesigned .portrait figcaption > span:last-child { font-size: 10px; letter-spacing: .5px; }
 .hero-statement .headline-fragment { display: inline-block; }
 .signal-art {
@@ -50,8 +50,8 @@
 .signal-flow { stroke: var(--purple); stroke-width: 2.2; stroke-dasharray: 7 93; animation: representation-flow 7s linear infinite; animation-play-state: paused; }
 .signal-pipeline-nodes { fill: var(--paper); stroke: var(--purple); stroke-width: 1.7; }
 .signal-language-token { fill: color-mix(in srgb, var(--surface) 82%, var(--lavender)); stroke: color-mix(in srgb, var(--purple) 30%, var(--line)); stroke-width: 1; }
-.signal-stage-legend { position: absolute; bottom: 8px; left: 5.2%; right: 5.8%; display: grid; grid-template-columns: 21% 45% 34%; text-align: center; color: var(--muted); font-size: 11px; letter-spacing: .2px; pointer-events: none; }
-.signal-word-label { position: absolute; left: 70.4%; top: 86%; width: 23.7%; height: 7.2%; display: grid; place-items: center; color: var(--purple); font-size: 13px; pointer-events: none; }
+.signal-stage-legend { position: absolute; z-index: 2; bottom: 8px; left: 5.2%; right: 5.8%; display: grid; grid-template-columns: 21% 45% 34%; text-align: center; color: var(--muted); font-size: 11px; letter-spacing: .2px; pointer-events: none; }
+.signal-word-label { position: absolute; z-index: 2; left: 70.4%; top: 87.7%; width: 17.4%; height: 6.1%; display: grid; place-items: center; color: var(--purple); font-size: 13px; line-height: 1.2; pointer-events: none; }
 html[data-language=both] .signal-stage-legend .zh, html[data-language=both] .signal-word-label .zh { display: none; }
 .signal-redesigned.motion-active .signal-flow,
 .signal-redesigned.motion-active .signal-ambient-nodes circle { animation-play-state: running; }
@@ -110,7 +110,7 @@ html[data-language=both] .signal-stage-legend .zh, html[data-language=both] .sig
 @media(max-width: 650px) {
   .portrait-surface.signal-redesigned { border-radius: 20px 20px 54px 20px; min-height: 420px; }
   .signal-redesigned .portrait-topline { padding: 20px; font-size: 10px; letter-spacing: .45px; }
-  .signal-redesigned .portrait { top: 57px; width: 198px; }
+  .signal-redesigned .portrait { top: 49px; width: 198px; }
   .signal-redesigned .portrait img { height: 235px; }
   .signal-redesigned .portrait figcaption { padding-block: 10px; }
   .signal-redesigned .portrait figcaption > span:last-child { font-size: 10px; letter-spacing: .2px; }
