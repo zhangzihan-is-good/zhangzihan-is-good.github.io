@@ -128,3 +128,100 @@ html[data-language=both] .signal-stage-legend .zh, html[data-language=both] .sig
   .sketch-state { transition: none; }
 }
 @media print { .signal-art { display: none; } }
+
+/* A second decorative layer gives the portrait depth without moving the photograph. */
+.portrait-energy {
+  --energy-violet: #9272df;
+  --energy-cyan: #70c9d3;
+  --energy-point: #8260cc;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.portrait-surface .signal-art { z-index: 1; }
+.portrait-energy-glow {
+  position: absolute;
+  width: 73%;
+  height: 67%;
+  border-radius: 50%;
+  opacity: .58;
+  filter: blur(23px);
+  animation: portrait-glow-drift 13s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+.portrait-energy-glow-violet {
+  left: -7%; top: 8%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--energy-violet) 39%, transparent), transparent 71%);
+}
+.portrait-energy-glow-cyan {
+  right: -10%; bottom: 13%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--energy-cyan) 45%, transparent), transparent 70%);
+  animation-duration: 17s;
+  animation-delay: -5s;
+  animation-direction: alternate-reverse;
+}
+.portrait-energy-ring {
+  position: absolute;
+  left: 50%; top: 43%;
+  width: 91%; aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--energy-violet) 24%, transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-27deg) scaleY(.7);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--energy-violet) 9%, transparent);
+}
+.portrait-energy-ring > i {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from -85deg, transparent 0deg 280deg, color-mix(in srgb, var(--energy-violet) 6%, transparent) 303deg, var(--energy-violet) 339deg, #f6edff 354deg, transparent 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  filter: drop-shadow(0 0 4px var(--energy-violet));
+  opacity: .8;
+  animation: portrait-energy-orbit 15s linear infinite;
+  animation-play-state: paused;
+}
+.portrait-energy-ring-two {
+  width: 84%; top: 46%;
+  border-color: color-mix(in srgb, var(--energy-cyan) 27%, transparent);
+  transform: translate(-50%, -50%) rotate(31deg) scaleY(.76);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--energy-cyan) 10%, transparent);
+}
+.portrait-energy-ring-two > i {
+  background: conic-gradient(from 95deg, transparent 0deg 285deg, color-mix(in srgb, var(--energy-cyan) 8%, transparent) 310deg, var(--energy-cyan) 343deg, #ecffff 355deg, transparent 360deg);
+  filter: drop-shadow(0 0 4px var(--energy-cyan));
+  animation-duration: 19s;
+  animation-delay: -8s;
+  animation-direction: reverse;
+}
+.portrait-energy-dust {
+  position: absolute; inset: 5%;
+  opacity: .62;
+  background: radial-gradient(circle at 11% 23%, var(--energy-point) 0 1.5px, transparent 2.7px), radial-gradient(circle at 85% 19%, var(--energy-cyan) 0 2px, transparent 3px), radial-gradient(circle at 93% 58%, var(--energy-violet) 0 1.5px, transparent 2.7px), radial-gradient(circle at 14% 72%, var(--energy-cyan) 0 2px, transparent 3px), radial-gradient(circle at 77% 78%, var(--energy-point) 0 1.2px, transparent 2.5px), radial-gradient(circle at 39% 9%, var(--energy-violet) 0 1px, transparent 2px);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--energy-point) 35%, transparent));
+  animation: portrait-dust-drift 9s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+html:not([data-motion-paused=true]) .portrait-surface.motion-active .portrait-energy-glow,
+html:not([data-motion-paused=true]) .portrait-surface.motion-active .portrait-energy-ring > i,
+html:not([data-motion-paused=true]) .portrait-surface.motion-active .portrait-energy-dust { animation-play-state: running; }
+html[data-motion-paused=true] .portrait-energy-glow,
+html[data-motion-paused=true] .portrait-energy-ring > i,
+html[data-motion-paused=true] .portrait-energy-dust { animation-play-state: paused!important; }
+html[data-theme=dark] .portrait-energy { --energy-violet: #b6a0f2; --energy-cyan: #6ebbc9; --energy-point: #c2b3ef; }
+html[data-theme=dark] .portrait-energy-glow { opacity: .46; }
+@keyframes portrait-glow-drift { from { transform: translate(-5px, 7px) scale(.94); } to { transform: translate(14px, -10px) scale(1.1); } }
+@keyframes portrait-energy-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes portrait-dust-drift { from { transform: translateY(5px); opacity: .48; } to { transform: translateY(-7px); opacity: .78; } }
+@media(max-width:650px) {
+  .portrait-energy-ring { width: 104%; top: 43%; }
+  .portrait-energy-ring-two { width: 94%; top: 45%; }
+  .portrait-energy-glow { filter: blur(18px); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .portrait-energy-glow, .portrait-energy-ring > i, .portrait-energy-dust { animation: none!important; }
+}
+@media print { .portrait-energy { display: none!important; } }

@@ -13,7 +13,7 @@ const outputRoot = option('--output') ? path.resolve(process.cwd(), option('--ou
 const BASE = 'https://zhangzihan-is-good.github.io/';
 // Update this only when publishing actual content changes, or pass --lastmod YYYY-MM-DD.
 const lastmod = option('--lastmod') || '2026-10-30';
-const homeLastmod = option('--home-lastmod') || '2026-11-01';
+const homeLastmod = option('--home-lastmod') || '2026-11-02';
 if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) throw new Error('Invalid --lastmod date');
 if (!/^\d{4}-\d{2}-\d{2}$/.test(homeLastmod)) throw new Error('Invalid --home-lastmod date');
 const source = await fs.readFile(path.join(sourceRoot, 'content.js'), 'utf8');
@@ -103,7 +103,7 @@ function homepage(lang) {
   let html = template;
   html = html.replace(/<html[^>]*>/,'<html lang="' + (lang === 'zh' ? 'zh-CN' : 'en') + '" data-language="' + lang + '" data-route-language="' + lang + '" data-theme="light">');
   html = html.replace(/(<([a-z0-9]+)\b[^>]*\bdata-t="([^"]+)"[^>]*>)[\s\S]*?(<\/\2>)/gi, (all,open,tag,key,close) => T[key] ? open + dual(T[key]) + close : all);
-  html = html.replace(/(<h2 class="hero-statement"[^>]*>)[\s\S]*?(<\/h2>)/,'$1<span class="en" lang="en">Learning from the <em>brain.</em><br>Building for intelligence.</span><span class="zh" lang="zh-CN">向大脑学习，<br class="zh-break">探索智能的可能。</span>$2');
+  html = html.replace(/(<h2 class="hero-statement"[^>]*>)[\s\S]*?(<\/h2>)/,'$1<span class="en" lang="en">Learning from the <em>brain.</em><br>Building for <em>intelligence.</em></span><span class="zh" lang="zh-CN">向大脑学习，<br class="zh-break">探索智能的可能。</span>$2');
   const profileLinks = {'hero-scholar':'scholar','hero-github':'github','publication-scholar':'scholar','blog-link':'blog','footer-github':'github','footer-scholar':'scholar'};
   for (const [id,key] of Object.entries(profileLinks)) html=hrefForId(html,id,D.profile[key]);
   html = html.replace(/(<div class="language-switch"[^>]*>)[\s\S]*?(<\/div>)/,(_,open,close) => open + langNav(lang,prefix) + close);
@@ -127,7 +127,7 @@ function homepage(lang) {
   html = html.replace(/\s*<meta property="og:[^"]+"[^>]*>/g,'');
   html = html.replace(/<script>try\{const q=new URLSearchParams[\s\S]*?<\/script>/,boot(lang));
   html = html.replace(/\b(href|src)="(?!https?:|mailto:|#|\/)([^"]+)"/g,(_,attr,resource)=>attr+'="/'+resource+'"');
-  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=blog20261101b"');
+  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=hero20261102"');
   const pageURL = absolute(prefix(lang));
   const graph = {'@context':'https://schema.org','@graph':[
     {'@type':'WebSite','@id':websiteID,url:BASE,name:'Zihan Zhang · 张梓寒',alternateName:'张梓寒个人学术主页',inLanguage:['en','zh-CN']},person,

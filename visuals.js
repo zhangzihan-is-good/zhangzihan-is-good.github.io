@@ -101,12 +101,14 @@
         <rect class="sketch-box" x="11" y="49" width="31" height="26" rx="6"/><rect class="sketch-box" x="72" y="20" width="31" height="26" rx="6"/><rect class="sketch-box" x="72" y="78" width="31" height="26" rx="6"/><rect class="sketch-box" x="136" y="49" width="31" height="26" rx="6"/>
         <path class="sketch-writing" d="M19 58H33M19 65H29M80 29H95M80 36H91M80 87H95M80 94H91M144 58H159M144 65H155"/>
       </g>
-      <g class="sketch-state sketch-medical">
-        <path class="sketch-edge" d="M13 28H24L29 21L34 36L40 16L46 31L50 28H59M17 58H53V81H17ZM21 75L31 64L39 72L44 66L50 75M20 102H53M20 111H44"/>
-        <path class="sketch-edge" d="M63 28Q87 28 104 63M59 70H104M59 107Q87 107 104 63"/>
-        <path class="sketch-flow" pathLength="100" d="M63 28Q87 28 104 63M59 70H104M59 107Q87 107 104 63H137"/>
-        <circle class="sketch-merge" cx="108" cy="63" r="7"/><path class="sketch-edge sketch-arrow" d="M117 63H139"/><rect class="sketch-box" x="142" y="44" width="29" height="38" rx="7"/>
-        <path class="sketch-writing" d="M150 55H163M150 63H163M150 71H158"/>
+      <g class="sketch-state sketch-medical sketch-medical-health">
+        <path class="sketch-box" d="M53 39C40 19 14 27 14 47C14 71 53 100 53 100S92 71 92 47C92 27 66 19 53 39Z"/>
+        <path class="sketch-edge" d="M24 59H36L42 47L50 76L59 43L67 59H81"/>
+        <path class="sketch-flow" pathLength="100" d="M24 59H36L42 47L50 76L59 43L67 59H81"/>
+        <path class="sketch-edge sketch-arrow" d="M96 63H110"/>
+        <rect class="sketch-box" x="117" y="39" width="43" height="48" rx="7"/>
+        <path class="sketch-edge" d="M126 32V39M138 32V39M150 32V39M126 87V94M138 87V94M150 87V94M110 49H117M110 62H117M110 75H117M160 49H167M160 62H167M160 75H167"/>
+        <text x="138.5" y="68" text-anchor="middle" fill="currentColor" stroke="none" font-size="14" font-weight="600">AI</text>
       </g>`;
     if (center) {
       center.insertBefore(sketch, center.querySelector('span'));
@@ -130,7 +132,7 @@
       map.dataset.visualMode = direction;
       links?.querySelectorAll('.visual-route').forEach(path => path.classList.toggle('is-current', path.classList.contains(`visual-route-${direction}`)));
       const caption = center?.querySelector(':scope > span');
-      if (caption) caption.textContent = 'BRAIN × AI';
+      if (caption) caption.textContent = direction === 'medical' ? 'MEDICAL × AI' : 'BRAIN × AI';
     };
     const syncDirection = () => setDirection(map.querySelector('.map-node.active')?.dataset.direction || 'eeg');
     document.addEventListener('zz:direction', event => setDirection(event.detail?.direction));

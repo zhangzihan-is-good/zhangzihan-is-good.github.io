@@ -92,7 +92,7 @@
 
   function translate() {
     $$('[data-t]').forEach(el => {if(T[el.dataset.t]) el.innerHTML=dual(T[el.dataset.t]);});
-    $('.hero-statement').innerHTML = '<span class="en" lang="en">Learning from the <em>brain.</em><br>Building for intelligence.</span><span class="zh" lang="zh-CN">向大脑学习，<br class="zh-break">探索智能的可能。</span>';
+    $('.hero-statement').innerHTML = '<span class="en" lang="en">Learning from the <em>brain.</em><br>Building for <em>intelligence.</em></span><span class="zh" lang="zh-CN">向大脑学习，<br class="zh-break">探索智能的可能。</span>';
   }
   function captureReadingAnchor() {
     const top = ($('.header')?.getBoundingClientRect().bottom || 90) + 12;
