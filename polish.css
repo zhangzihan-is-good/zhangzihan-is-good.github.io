@@ -500,3 +500,21 @@ html[data-motion-paused=true] .contact-section .contact-arrow::before { animatio
 
 /* Use the shared text-button underline, without the extra animated line. */
 #blog-link::after { content: none; }
+
+
+/* Publication roles and corresponding-author marks stay separate from citation data. */
+.publication-author { white-space: nowrap; }
+.author-mark { color: var(--purple); font-size: .78em; line-height: 0; vertical-align: super; margin-left: 1px; }
+.authorship-label { color: var(--muted); font-size: 12px; line-height: 1.6; }
+.authorship-label > .en, .authorship-label > .zh { display: block; margin: 0; }
+.pub-authorship { display: block; max-width: 140px; padding-inline: 2px; }
+.author-legend { color: var(--muted); font-size: 12px; line-height: 1.6; }
+.author-legend .zh { margin-left: 5px; }
+.author-legend > [aria-hidden] { color: var(--purple); }
+.result-summary .author-legend { margin-left: auto; }
+.dialog-authorship { display: block; margin-top: 4px; }
+.dialog-authors + .author-legend { margin-top: 5px; }
+@media (max-width: 650px) {
+  .pub-authorship { max-width: none; font-size: 11px; }
+  .result-summary .author-legend { margin-left: 0; }
+}

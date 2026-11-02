@@ -1,4 +1,5 @@
 // Content transcribed from the supplied CV; paper URLs checked against primary sources.
+// Authorship labels and correspondence checked against publisher records and author confirmation (2026-11-03).
 window.PROFILE_DATA = {
   profile: {
     nameZh: '张梓寒', nameEn: 'Zihan Zhang', email: 'zihanzhang@ir.hit.edu.cn',
@@ -12,6 +13,7 @@ window.PROFILE_DATA = {
       id: 'cofett', title: 'Is EEG-to-Text Feasible in Real-World Scenarios? An In-Depth Analysis Using a Neuropsychology-Inspired Benchmark',
       zhTitle: 'EEG到文本能否走向真实场景？基于神经心理学启发基准的深入分析',
       authors: 'Zihan Zhang, Yu Bao, Xiao Ding, Tianyi Jiang, Kai Xiong',
+      correspondingAuthors: ['Xiao Ding'], authorship: {zh:'共一第一',en:'Co-first author (listed first)'},
       venue: 'ACL main Long Papers', year: 2026, type: 'conference', topics: ['eeg', 'nlp'], selected: true,
       summary: {
         zh: '以神经心理学启发的基准考察EEG到文本解码，关注真实使用场景下的评估问题。',
@@ -25,6 +27,7 @@ window.PROFILE_DATA = {
       id: 'leem', title: 'LEEM: A Large EEG-based Emotion Model with Brain-Inspired Sparse Experts',
       zhTitle: 'LEEM：结合类脑稀疏专家的EEG情绪大模型',
       authors: 'Zihan Zhang, Xiao Ding, Tianyi Jiang, Junhao Gao, Xia Liang',
+      correspondingAuthors: ['Xiao Ding'], authorship: {zh:'独立一作',en:'Sole first author'},
       venue: 'ICASSP', year: 2026, type: 'conference', topics: ['eeg', 'brain'], selected: true,
       summary: {zh: '将脑启发的稀疏专家机制用于基于EEG的情绪建模。', en: 'EEG-based emotion modeling with brain-inspired sparse experts.'},
       url: 'https://www.cmsworkshops.com/ICASSP2026/view_paper.php?PaperNum=10139&bare=1',
@@ -35,6 +38,7 @@ window.PROFILE_DATA = {
       id: 'gist', title: 'Hierarchical gist representation of events in human brain during naturalistic stimuli',
       zhTitle: '自然刺激下人脑对事件要旨的层级表征',
       authors: 'Kaizhou Li, Peng Ren, Qiuyi Liu, Zihan Zhang, Siyang Li, Zhipeng Li, Lili Sun, Xiao Ding, Xia Liang',
+      correspondingAuthors: ['Xia Liang'], authorship: {zh:'第四作者',en:'Fourth author'},
       venue: 'NeuroImage', year: 2026, type: 'article', topics: ['brain', 'nlp'], selected: false,
       summary: {zh: '研究自然刺激下人脑如何在不同层级表征事件的核心内容。', en: 'Investigating how the human brain represents event gist at different levels during naturalistic stimuli.'},
       url: 'https://doi.org/10.1016/j.neuroimage.2026.122191', doi: '10.1016/j.neuroimage.2026.122191',
@@ -45,6 +49,7 @@ window.PROFILE_DATA = {
       id: 'brain-survey', title: 'Brain and Cognitive Science Inspired Deep Learning: A Comprehensive Survey',
       zhTitle: '脑与认知科学启发的深度学习：综合综述',
       authors: 'Zihan Zhang, Xiao Ding, Xia Liang, Yusheng Zhou, Bing Qin, Ting Liu',
+      correspondingAuthors: ['Xiao Ding'], authorship: {zh:'独立一作',en:'Sole first author'},
       venue: 'IEEE TKDE', year: 2025, type: 'article', topics: ['brain'], selected: true,
       summary: {zh: '梳理脑与认知科学和深度学习之间的联系，讨论脑启发方法、相关任务与计算认知研究。', en: 'A survey connecting brain and cognitive science with deep learning, covering inspired methods, related tasks, and computational cognition.'},
       url: 'https://ieeexplore.ieee.org/document/10834593', linkLabel: {zh: '论文', en: 'Paper'},
@@ -54,6 +59,7 @@ window.PROFILE_DATA = {
       id: 'multibcd', title: 'MultiBCD: A multimodal model that simulates the human diagnostic process for automated breast cancer detection',
       zhTitle: 'MultiBCD：模拟人类诊断过程的乳腺癌自动检测多模态模型',
       authors: 'J. Du, Zihan Zhang, W. Tao',
+      correspondingAuthors: ['W. Tao'], authorship: {zh:'第二作者',en:'Second author'},
       venue: 'Biomedical Signal Processing and Control', year: 2025, type: 'article', topics: ['medical', 'nlp'], selected: false,
       summary: {zh: '以多模态建模模拟诊断过程，面向乳腺癌自动检测。', en: 'A multimodal approach that models the diagnostic process for automated breast cancer detection.'},
       url: 'https://doi.org/10.1016/j.bspc.2024.107410', doi: '10.1016/j.bspc.2024.107410', codeUrl: 'https://github.com/zhangzihan-is-good/AI-breast-cancer',
@@ -64,6 +70,7 @@ window.PROFILE_DATA = {
       id: 'chisco', title: 'Chisco: An EEG-based BCI dataset for decoding of imagined speech',
       zhTitle: 'Chisco：用于想象言语解码的EEG脑机接口数据集',
       authors: 'Zihan Zhang, Xiao Ding, Yu Bao, Yi Zhao, Xia Liang, Bing Qin, Ting Liu',
+      correspondingAuthors: ['Xiao Ding','Xia Liang'], authorship: {zh:'独立一作',en:'Sole first author'},
       venue: 'Scientific Data', year: 2024, type: 'article', topics: ['eeg', 'nlp'], selected: true,
       summary: {zh: '构建面向想象言语解码的EEG数据资源，为非侵入式脑机接口研究提供基础。', en: 'An EEG dataset for imagined-speech decoding, providing a resource for non-invasive brain–computer interface research.'},
       url: 'https://doi.org/10.1038/s41597-024-04114-1', doi: '10.1038/s41597-024-04114-1', codeUrl: 'https://github.com/zhangzihan-is-good/Chisco',
@@ -74,6 +81,7 @@ window.PROFILE_DATA = {
       id: 'masters-thesis', title: 'Research on Construction Technology of Time Sequence Diagram Based on Pre-training Model',
       zhTitle: '基于预训练模型的时序关系图构建技术研究',
       authors: 'Zihan Zhang', venue: "Master’s thesis · Harbin Institute of Technology", year: 2023, type: 'thesis', topics: ['nlp'], selected: false,
+      correspondingAuthors: [], authorship: {zh:'独立作者',en:'Sole author'},
       summary: {zh: '围绕预训练模型与文本时序关系图构建开展研究。', en: 'Research on constructing temporal relation graphs using pre-trained models.'},
       url: 'https://link.oversea.cnki.net/doi/10.27061/d.cnki.ghgdu.2023.002842',
       doi: '10.27061/d.cnki.ghgdu.2023.002842',
@@ -103,8 +111,8 @@ window.PROFILE_DATA = {
     {period:'2025.06–2025.10',title:{zh:'信息系统工程国家重点实验室 · 实习生',en:'Research Intern · State Key Laboratory of Information System Engineering'},detail:{zh:'参与实验室科研工作。',en:'Research internship.'}},
     {period:'2024.12–present',title:{zh:'黑龙江中文信息处理重点实验室 · 学生科研助理',en:'Student Research Assistant · Heilongjiang Key Laboratory of Chinese Information Processing'},detail:{zh:'参与科研辅助工作。',en:'Research assistance.'}},
     {period:'2022.03–2024.06',title:{zh:'哈尔滨工业大学 · 助教',en:'Teaching Assistant · Harbin Institute of Technology'},detail:{zh:'参与《计算科学导论——计算+、互联网+与人工智能+》实验部分的设计与写作；教材由高等教育出版社出版。',en:'Contributed to the laboratory design and writing of an introductory computing textbook published by Higher Education Press.'}},
-    {period:'2025.09–present',title:{zh:'计算学部考研辅导 · 志愿讲师',en:'Volunteer Lecturer · Postgraduate Entrance Exam Tutoring'},detail:{zh:'哈尔滨工业大学计算学部，累计约30课时。',en:'About 30 teaching hours at the Faculty of Computing, Harbin Institute of Technology.'}},
-    {period:'2024.03–present',title:{zh:'科技写作与实验室编辑',en:'Technology Writer & Lab Editor'},detail:{zh:'“夕小瑶科技说”签约编辑、SCIR实验室编辑；笔名Zicy，个人技术文章累计阅读量20万+。',en:'Contributing editor for Xixiaoyao Tech and editor at SCIR; writes as Zicy, with over 200,000 cumulative article reads.'}},
+    {period:'2025.09–present',title:{zh:'哈尔滨工业大学计算学部 · 考研辅导志愿讲师',en:'Faculty of Computing, Harbin Institute of Technology · Volunteer Lecturer for Postgraduate Entrance Exam Tutoring'},detail:{zh:'哈尔滨工业大学计算学部，累计约30课时。',en:'About 30 teaching hours at the Faculty of Computing, Harbin Institute of Technology.'}},
+    {period:'2024.03–present',title:{zh:'“夕小瑶科技说”、SCIR实验室公众号 · 编辑',en:'Xixiaoyao Tech & SCIR Lab WeChat Accounts · Editor'},detail:{zh:'“夕小瑶科技说”签约编辑、SCIR实验室编辑；笔名Zicy，个人技术文章累计阅读量20万+。',en:'Contributing editor for Xixiaoyao Tech and editor at SCIR; writes as Zicy, with over 200,000 cumulative article reads.'}},
     {period:'2021.10–2022.04',title:{zh:'智慧融媒体文旅大数据平台 · 子课题学生负责人',en:'Student Subproject Lead · Cultural Tourism Big Data Platform'},detail:{zh:'黑龙江省“百千万”工程科技重大专项：智慧融媒体文旅大数据平台研发及应用。',en:'Development and application of an intelligent media and cultural-tourism big data platform under a Heilongjiang provincial science and technology project.'}}
   ],
   skills: [

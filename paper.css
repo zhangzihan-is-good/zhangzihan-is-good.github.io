@@ -17,8 +17,8 @@
 .paper-back .zh { font-size: 13px; }
 .paper-article { padding-top: 36px; }
 .paper-eyebrow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 13px; color: var(--purple); margin-bottom: 21px; }
-.paper-eyebrow span:first-child { font-size: 16px; font-weight: 600; }
-.paper-eyebrow span:last-child { padding: 4px 9px; border-radius: 5px; background: var(--lavender); }
+.paper-eyebrow .paper-year { font-size: 16px; font-weight: 600; }
+.paper-eyebrow .paper-venue { padding: 4px 9px; border-radius: 5px; background: var(--lavender); }
 .paper-title { font-size: clamp(30px, 3.3vw, 43px); line-height: 1.35; letter-spacing: -1px; overflow-wrap: anywhere; }
 .paper-title > .en, .paper-title > .zh { display: block; }
 .paper-title > .zh { font-size: 25px; line-height: 1.65; letter-spacing: 0; margin-top: 17px; color: var(--muted); font-weight: 500; }
@@ -89,3 +89,7 @@ html[data-language=zh] .paper-summary > .zh { font-size: 18px; margin-top: 0; co
   .paper-title { font-size: 22px; }
   .paper-bibtex { background: transparent; padding: 0; }
 }
+
+.paper-venue-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
+.paper-authorship { display: block; padding-left: 2px; }
+.paper-authors + .author-legend { margin-top: 6px; }
