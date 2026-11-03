@@ -8,6 +8,7 @@
   const T = {
     navResearch:{en:'Research',zh:'研究'},navPublications:{en:'Publications',zh:'论文'},navJourney:{en:'Journey',zh:'经历'},navContact:{en:'Contact',zh:'联系'},
     heroEyebrow:{en:'Ph.D. researcher · Brain & intelligence',zh:'博士研究生 · 大脑与智能'},
+    jobStatus:{en:'Open to work',zh:'求职中'},
     heroStatement:{en:'Learning from the brain. Building for intelligence.',zh:'向大脑学习，探索智能的可能。'},
     bio:{en:'I am a Ph.D. student at Harbin Institute of Technology (SCIR). My research spans brain–computer interfaces, brain-inspired AI, language and cognition, and medical AI.',zh:'我是哈尔滨工业大学 SCIR 实验室博士生，研究脑机接口、类脑人工智能、语言与认知及医学人工智能。'},
     exploreWork:{en:'Explore my work',zh:'探索研究'},emailLink:{en:'Email ↗',zh:'邮箱 ↗'},portraitFoot:{en:'Curiosity across disciplines.',zh:'保持好奇，跨越学科。'},
