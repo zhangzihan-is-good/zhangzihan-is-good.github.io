@@ -31,7 +31,7 @@ window.PROFILE_DATA = {
       venue: 'ICASSP', year: 2026, type: 'conference', topics: ['eeg', 'brain'], selected: true,
       summary: {zh: '将脑启发的稀疏专家机制用于基于EEG的情绪建模。', en: 'EEG-based emotion modeling with brain-inspired sparse experts.'},
       url: 'https://www.cmsworkshops.com/ICASSP2026/view_paper.php?PaperNum=10139&bare=1',
-      linkLabel: {zh: '会议论文', en: 'Conference paper'},
+      linkLabel: {zh: '论文', en: 'Paper'},
       bibtex: '@inproceedings{zhang2026leem,\n  title = {LEEM: A Large EEG-based Emotion Model with Brain-Inspired Sparse Experts},\n  author = {Zhang, Zihan and Ding, Xiao and Jiang, Tianyi and Gao, Junhao and Liang, Xia},\n  booktitle = {ICASSP 2026 - IEEE International Conference on Acoustics, Speech and Signal Processing},\n  pages = {6656--6660},\n  year = {2026}\n}'
     },
     {
