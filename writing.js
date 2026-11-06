@@ -1,6 +1,7 @@
 // The article list is ordinary HTML; this module adds its dialog and title filter.
 const writingDialog = document.querySelector('#writing-dialog');
 const writingTrigger = document.querySelector('#open-writing');
+const writingCard = document.querySelector('#selected-writing');
 
 if (writingDialog && writingTrigger) {
   const closeButton = writingDialog.querySelector('[data-writing-close]');
@@ -33,6 +34,7 @@ if (writingDialog && writingTrigger) {
     if (empty) empty.hidden = visible > 0;
   };
   const finishClose = () => {
+    if (writingDialog.open) return;
     if (ownsScrollLock) {
       document.body.style.overflow = savedOverflow;
       ownsScrollLock = false;
@@ -42,12 +44,12 @@ if (writingDialog && writingTrigger) {
     returnFocus = null;
     if (document.visibilityState !== 'hidden' && target?.isConnected) target.focus({preventScroll: true});
   };
-  const open = () => {
+  const open = (focusTarget = document.activeElement) => {
     if (writingDialog.open || document.querySelector('dialog[open]')) return;
     updateLanguage();
     if (search) search.value = '';
     filterArticles();
-    returnFocus = document.activeElement;
+    returnFocus = focusTarget;
     writingDialog.showModal();
     savedOverflow = document.body.style.overflow;
     ownsScrollLock = true;
@@ -58,26 +60,47 @@ if (writingDialog && writingTrigger) {
     closeButton?.focus({preventScroll: true});
   };
 
+  const closeWriting = () => {
+    if (location.hash === '#selected-writing') {
+      history.replaceState(history.state, '', '#experience');
+    }
+    writingDialog.close();
+  };
+  const syncWritingLink = () => {
+    if (location.hash !== '#selected-writing') {
+      if (writingDialog.open) writingDialog.close();
+      return;
+    }
+    if (document.querySelector('dialog[open]')) return;
+    writingCard?.scrollIntoView({block: 'center', behavior: 'instant'});
+    open(writingTrigger);
+  };
+
   writingTrigger.disabled = false;
-  writingTrigger.addEventListener('click', open);
-  closeButton?.addEventListener('click', () => writingDialog.close());
+  writingTrigger.addEventListener('click', () => open());
+  closeButton?.addEventListener('click', closeWriting);
   writingDialog.addEventListener('close', finishClose);
   writingDialog.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !event.isComposing) {
       event.preventDefault();
-      writingDialog.close();
+      closeWriting();
     }
   });
   writingDialog.addEventListener('click', event => {
     if (event.target !== writingDialog) return;
     const rect = writingDialog.getBoundingClientRect();
-    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) writingDialog.close();
+    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeWriting();
   });
   search?.addEventListener('input', filterArticles);
   document.addEventListener('zz:language', updateLanguage);
+  window.addEventListener('hashchange', syncWritingLink);
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) syncWritingLink();
+  });
   window.addEventListener('pagehide', () => {
     if (writingDialog.open) writingDialog.close();
     finishClose();
   });
   updateLanguage();
+  syncWritingLink();
 }
