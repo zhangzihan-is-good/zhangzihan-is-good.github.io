@@ -187,7 +187,17 @@
   const honorYears = [...new Set(D.honors.map(h=>h.year))];
   $('#honors-list').innerHTML = honorYears.map(year=>`<div class="honor-group"><div class="honor-year">${year}</div><div class="honor-items">${D.honors.filter(h=>h.year===year).map(h=>`<div class="honor-item"><div class="title">${dual(h.title)}</div></div>`).join('')}</div></div>`).join('');
   $('#skills-list').innerHTML = D.skills.map((s,i)=>`<div class="skill-item"><button type="button" class="skill-chip" aria-expanded="false" aria-controls="skill-tip-${i}">${esc(s.name)}</button><span class="skill-tip" id="skill-tip-${i}" hidden>${dual(s.level)}</span></div>`).join('');
-  $('#experience-list').innerHTML = D.experience.map(e=>`<details class="experience-item" data-expanded="false"><summary aria-expanded="false"><div><span class="period">${esc(e.period).replace('present','<span class="en">present</span><span class="zh">至今</span>')}</span><span class="title">${dual(e.title)}</span></div><span class="expand-icon" aria-hidden="true">+</span></summary><div class="experience-content"><div class="experience-detail">${dual(e.detail)}</div></div></details>`).join('');
+  $('#experience-list').innerHTML = D.experience.map(e=>`<details class="experience-item" data-expanded="false">
+    <summary aria-expanded="false">
+      <span class="period">${esc(e.period).replace('present', dual({en:'present',zh:'至今'}))}</span>
+      <span class="experience-summary-copy">
+        <span class="experience-role">${dual(e.role)}</span>${e.organization ? `
+        <span class="experience-organization">${dual(e.organization)}</span>` : ''}
+      </span>
+      <span class="expand-icon" aria-hidden="true">+</span>
+    </summary>
+    <div class="experience-content"><div class="experience-detail">${dual(e.detail)}</div></div>
+  </details>`).join('');
 
   function renderFilters() {
     if(!$('#topic-filters').querySelector('[data-filter]')) $('#topic-filters').innerHTML=topics.map(t=>`<button type="button" data-filter="${t.id}">${dual(t.label)}</button>`).join('');

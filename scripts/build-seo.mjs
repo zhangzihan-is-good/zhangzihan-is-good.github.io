@@ -13,7 +13,7 @@ const outputRoot = option('--output') ? path.resolve(process.cwd(), option('--ou
 const BASE = 'https://zhangzihan-is-good.github.io/';
 // Update this only when publishing actual content changes, or pass --lastmod YYYY-MM-DD.
 const lastmod = option('--lastmod') || '2026-11-03';
-const homeLastmod = option('--home-lastmod') || '2026-11-03';
+const homeLastmod = option('--home-lastmod') || '2026-11-06';
 if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) throw new Error('Invalid --lastmod date');
 if (!/^\d{4}-\d{2}-\d{2}$/.test(homeLastmod)) throw new Error('Invalid --home-lastmod date');
 const source = await fs.readFile(path.join(sourceRoot, 'content.js'), 'utf8');
@@ -119,7 +119,17 @@ function homepage(lang) {
   html = injectId(html,'education-list',D.education.map(e=>'<article class="education-item"><p class="period">'+period(e.period)+'</p><h4>'+dual(e.school)+'</h4><p class="degree">'+dual(e.degree)+'</p><p class="detail">'+dual(e.detail)+'</p></article>').join('\n'));
   html = injectId(html,'honors-list',[...new Set(D.honors.map(h=>h.year))].map(year=>'<div class="honor-group"><div class="honor-year">'+year+'</div><div class="honor-items">'+D.honors.filter(h=>h.year===year).map(h=>'<div class="honor-item"><div class="title">'+dual(h.title)+'</div></div>').join('')+'</div></div>').join(''));
   html = injectId(html,'skills-list',D.skills.map((s,i)=>'<div class="skill-item"><button type="button" class="skill-chip" aria-expanded="false" aria-controls="skill-tip-'+i+'">'+esc(s.name)+'</button><span class="skill-tip" id="skill-tip-'+i+'" hidden>'+dual(s.level)+'</span></div>').join(''));
-  html = injectId(html,'experience-list',D.experience.map(e=>'<details class="experience-item" data-expanded="false"><summary aria-expanded="false"><div><span class="period">'+period(e.period)+'</span><span class="title">'+dual(e.title)+'</span></div><span class="expand-icon" aria-hidden="true">+</span></summary><div class="experience-content"><div class="experience-detail">'+dual(e.detail)+'</div></div></details>').join(''));
+  html = injectId(html,'experience-list',D.experience.map(e=>`<details class="experience-item" data-expanded="false">
+    <summary aria-expanded="false">
+      <span class="period">${period(e.period)}</span>
+      <span class="experience-summary-copy">
+        <span class="experience-role">${dual(e.role)}</span>${e.organization ? `
+        <span class="experience-organization">${dual(e.organization)}</span>` : ''}
+      </span>
+      <span class="expand-icon" aria-hidden="true">+</span>
+    </summary>
+    <div class="experience-content"><div class="experience-detail">${dual(e.detail)}</div></div>
+  </details>`).join(''));
   const first = D.research[0];
   html = injectId(html,'direction-title',dual(first.title));
   html = injectId(html,'direction-detail',dual(first.detail));
@@ -133,7 +143,7 @@ function homepage(lang) {
   html = html.replace(/\s*<meta property="og:[^"]+"[^>]*>/g,'');
   html = html.replace(/<script>try\{const q=new URLSearchParams[\s\S]*?<\/script>/,boot(lang));
   html = html.replace(/\b(href|src)="(?!https?:|mailto:|#|\/)([^"]+)"/g,(_,attr,resource)=>attr+'="/'+resource+'"');
-  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=freshopening20261106"');
+  html = html.replace(/\b(href|src)="(\/[^"?]+\.(?:css|js))(?:\?[^\"]*)?"/g,'$1="$2?v=experience20261106"');
   const pageURL = absolute(prefix(lang));
   const graph = {'@context':'https://schema.org','@graph':[
     {'@type':'WebSite','@id':websiteID,url:BASE,name:'Zihan Zhang · 张梓寒',alternateName:'张梓寒个人学术主页',inLanguage:['en','zh-CN']},person,

@@ -527,3 +527,63 @@ html[data-motion-paused=true] .contact-section .contact-arrow::before { animatio
   .pub-authorship { max-width: none; font-size: 11px; }
   .result-summary .author-legend { margin-left: 0; }
 }
+
+#experience-list {
+  container: experience-list / inline-size;
+  --experience-date-width: 112px;
+  --experience-column-gap: 18px;
+}
+
+#experience-list .experience-item > summary {
+  grid-template-columns: minmax(0, 1fr) 25px;
+  grid-template-areas: "period toggle" "copy toggle";
+  gap: 7px var(--experience-column-gap);
+  align-items: start;
+  padding-block: 19px;
+}
+
+#experience-list .experience-item > summary:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+}
+
+#experience-list .experience-item > summary > .period {
+  grid-area: period;
+  margin: 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+}
+
+html[data-language=both] #experience-list .period > .en { display: none; }
+
+#experience-list .experience-summary-copy {
+  grid-area: copy;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+#experience-list .experience-role { display: block; font-size: 17px; font-weight: 650; line-height: 1.46; }
+#experience-list .experience-organization { display: block; margin-top: 5px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+#experience-list :is(.experience-role, .experience-organization) > :is(.en, .zh) { display: block; }
+html[data-language=both] #experience-list .experience-role > .zh { font-size: .92em; }
+#experience-list summary:hover .experience-role { color: var(--purple); }
+
+#experience-list .experience-item > summary > .expand-icon {
+  grid-area: toggle;
+  align-self: start;
+  justify-self: end;
+}
+
+@container experience-list (min-width: 560px) {
+  #experience-list .experience-item > summary {
+    grid-template-columns: var(--experience-date-width) minmax(0, 1fr) 25px;
+    grid-template-areas: "period copy toggle";
+    padding-block: 22px;
+  }
+
+  #experience-list .experience-item > summary > .period { padding-top: 3px; }
+  #experience-list .experience-detail {
+    padding-inline: calc(var(--experience-date-width) + var(--experience-column-gap)) 43px;
+  }
+}
