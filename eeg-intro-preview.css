@@ -68,21 +68,13 @@
   align-items: center;
   border: 1px solid #bda0ff58;
   border-radius: 16px;
-  padding: 7px 7px 7px 13px;
+  padding: 7px;
   color: #f1eaff;
   background: #1e1729f2;
   box-shadow: 0 8px 40px #110a2590;
   backdrop-filter: blur(14px);
 }
 .eeg-intro-dock[hidden], .eeg-intro-dock [hidden] { display: none !important; }
-.eeg-intro-name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-}
 .eeg-intro-dock button {
   min-height: 36px;
   display: inline-flex;
@@ -140,8 +132,6 @@ html[data-language=zh] .eeg-intro-preview-target::after { content: "语言"; }
 @media (max-width: 560px) {
   .eeg-intro-caption { top: 66%; font-size: 10px; }
   .eeg-intro-dock { right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); gap: 8px; }
-  .eeg-intro-dock .eeg-intro-name .en { display: none; }
-  html[data-language=en] .eeg-intro-dock .eeg-intro-name .en { display: inline; }
   .eeg-intro-hint { max-width: 135px; }
 }
 @media (prefers-reduced-motion: reduce) {
