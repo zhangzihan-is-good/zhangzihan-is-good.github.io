@@ -1,4 +1,4 @@
-import { playEEGIntro } from './eeg-intro.js?v=brain';
+import { playEEGIntro } from './eeg-intro.js?v=language-landing';
 import { playSignature } from './signature-particles.js';
 
 const root = document.documentElement;
@@ -6,14 +6,14 @@ const overlay = document.querySelector('.eeg-intro-overlay');
 const canvas = overlay.querySelector('canvas');
 const caption = overlay.querySelector('.eeg-intro-stage');
 const stages = [...overlay.querySelectorAll('.eeg-intro-progress i')];
-const previewTarget = overlay.querySelector('.eeg-intro-preview-target');
 const dock = document.querySelector('.eeg-intro-dock');
 const replay = dock.querySelector('[data-eeg-replay]');
 const skip = dock.querySelector('[data-eeg-skip]');
 const hint = dock.querySelector('.eeg-intro-hint');
 const heading = document.querySelector('.hero h1');
+const header = document.querySelector('.header');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-const sessionKey = 'zz-eeg-brain-preview-played';
+const sessionKey = 'zz-eeg-language-landing-played';
 const stageLabels = {
   eeg: ['01  /  EEG SIGNAL', '01  /  脑电信号', 0],
   brain: ['02  /  HUMAN BRAIN', '02  /  人脑', 1],
@@ -23,11 +23,9 @@ const stageLabels = {
 let playing = false;
 let signing = false;
 let cancel = null;
-let landing = null;
 let portrait = null;
-let fallback = false;
-let scrollAtStart = 0;
-let cleanupTimer;
+let expectedScroll = 0;
+let scrollBeforeLanding = null;
 
 function motionPaused() {
   return reduce.matches || root.dataset.motionPaused === 'true';
@@ -42,21 +40,32 @@ function syncControls() {
 }
 
 function targetRect() {
-  const box = document.querySelector('.signal-language-token');
-  const rect = box?.getBoundingClientRect();
-  if (rect && rect.width > 0 && rect.bottom < innerHeight - 14 && rect.top > 64) {
-    fallback = false;
-    return rect;
-  }
-  fallback = true;
-  return previewTarget.getBoundingClientRect();
+  const rect = portrait?.querySelector('.signal-language-token')?.getBoundingClientRect();
+  return rect?.width > 0 && rect.height > 0 ? rect : null;
+}
+
+function scrollDuringOpening(top) {
+  window.scrollTo({top, behavior: 'instant'});
+  expectedScroll = scrollY;
+}
+
+function showLanguageBox() {
+  const rect = targetRect();
+  if (!rect) return;
+  const controls = dock.getBoundingClientRect();
+  const overlapsDock = rect.right > controls.left && rect.left < controls.right;
+  const bottom = Math.min(innerHeight - 18, overlapsDock ? controls.top - 12 : Infinity);
+  const top = (header?.getBoundingClientRect().bottom ?? 0) + 12;
+  const shift = rect.bottom > bottom ? rect.bottom - bottom : Math.min(0, rect.top - top);
+  if (Math.abs(shift) < 1) return;
+  scrollBeforeLanding ??= scrollY;
+  scrollDuringOpening(scrollY + shift);
 }
 
 function showStage(stage) {
+  if (stage === 'word' || stage === 'landing') showLanguageBox();
   if (stage === 'landing') {
-    landing = targetRect();
     overlay.classList.add('is-landing');
-    previewTarget.classList.toggle('is-visible', fallback);
     return;
   }
   const label = stageLabels[stage];
@@ -69,7 +78,7 @@ function finish() {
   if (!playing) return;
   playing = false;
   signing = false;
-  clearTimeout(cleanupTimer);
+  scrollBeforeLanding = null;
   const stop = cancel;
   cancel = null;
   stop?.();
@@ -81,14 +90,8 @@ function finish() {
   if (restoreFocus && !replay.disabled) replay.focus({preventScroll: true});
 }
 
-function clearPreviewTarget() {
-  previewTarget.classList.remove('is-visible');
-  previewTarget.textContent = '';
-}
-
 function clearOverlay() {
   overlay.classList.remove('is-playing', 'is-landing', 'is-signature');
-  clearPreviewTarget();
 }
 
 function signatureTargets() {
@@ -123,12 +126,6 @@ function signatureTargets() {
 function startSignature() {
   if (!playing) return;
   cancel = null;
-  portrait?.classList.remove('eeg-intro-hide-word');
-  if (landing && !fallback) portrait?.classList.add('eeg-intro-landing');
-  if (fallback) {
-    previewTarget.textContent = root.dataset.language === 'zh' ? '你好。' : 'Hello.';
-    cleanupTimer = setTimeout(clearPreviewTarget, 340);
-  }
 
   try {
     const targets = signatureTargets();
@@ -153,17 +150,46 @@ function startSignature() {
   }
 }
 
+function completeLanding() {
+  if (!playing) return;
+  portrait?.classList.remove('eeg-intro-hide-word');
+  if (targetRect()) portrait.classList.add('eeg-intro-landing');
+  if (scrollBeforeLanding === null) {
+    startSignature();
+    return;
+  }
+
+  // Let the word illuminate the real box before returning to the headline.
+  const from = scrollY;
+  const to = scrollBeforeLanding;
+  let started;
+  let request;
+  function returnFrame(now) {
+    started ??= now;
+    const progress = Math.min(1, Math.max(0, (now - started - 250) / 330));
+    if (progress > 0) {
+      const ease = progress * progress * (3 - 2 * progress);
+      scrollDuringOpening(from + (to - from) * ease);
+    }
+    if (progress < 1) request = requestAnimationFrame(returnFrame);
+    else {
+      scrollBeforeLanding = null;
+      startSignature();
+    }
+  }
+  request = requestAnimationFrame(returnFrame);
+  cancel = () => cancelAnimationFrame(request);
+}
+
 function start() {
   if (playing || motionPaused() || document.hidden) return;
-  clearTimeout(cleanupTimer);
   clearOverlay();
   portrait = document.querySelector('.portrait-surface');
   portrait?.classList.remove('eeg-intro-landing');
   portrait?.classList.add('eeg-intro-hide-word');
   heading?.classList.add('signature-hidden');
-  landing = null;
-  fallback = false;
-  scrollAtStart = scrollY;
+  scrollBeforeLanding = null;
+  expectedScroll = scrollY;
   playing = true;
   overlay.classList.add('is-playing');
   syncControls();
@@ -176,7 +202,7 @@ function start() {
       getTarget: targetRect,
       word: root.dataset.language === 'zh' ? '你好。' : 'Hello.',
       onStage: showStage,
-      onFinish: startSignature
+      onFinish: completeLanding
     });
     if (playing) cancel = stop;
   } catch (error) {
@@ -185,19 +211,27 @@ function start() {
   }
 }
 
+function skipOpening() {
+  if (playing && scrollBeforeLanding !== null && Math.abs(scrollY - expectedScroll) < 2) {
+    scrollDuringOpening(scrollBeforeLanding);
+  }
+  finish();
+}
+
 replay.addEventListener('click', () => {
   window.scrollTo({top: 0, behavior: 'instant'});
   requestAnimationFrame(start);
 });
-skip.addEventListener('click', () => finish());
+skip.addEventListener('click', skipOpening);
 document.addEventListener('keydown', event => {
-  if (playing && event.key === 'Escape') finish();
+  if (playing && event.key === 'Escape') skipOpening();
 });
 window.addEventListener('scroll', () => {
-  if (playing && Math.abs(scrollY - scrollAtStart) > 36) finish();
+  if (playing && Math.abs(scrollY - expectedScroll) > 36) finish();
 }, {passive: true});
 window.addEventListener('resize', () => {
   if (signing) finish();
+  else if (overlay.classList.contains('is-landing') && portrait?.classList.contains('eeg-intro-hide-word')) showLanguageBox();
 }, {passive: true});
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) finish();

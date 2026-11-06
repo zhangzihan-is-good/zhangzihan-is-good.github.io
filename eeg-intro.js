@@ -209,6 +209,34 @@ function cubic(a, b, c, d, t) {
   return s * s * s * a + 3 * s * s * t * b + 3 * s * t * t * c + t * t * t * d;
 }
 
+function paintLandingTrail(context, time, x, y, target, width, height) {
+  const progress = phase(time, 2030, 2540);
+  if (progress <= 0 || progress >= 1) return;
+  const start = Math.max(0, progress - .18);
+  const curveX = t => cubic(x, x + width * .13, target.x - width * .18, target.x, t);
+  const curveY = t => cubic(y, y + height * .07, target.y - height * .12, target.y, t);
+  const light = context.createLinearGradient(curveX(start), curveY(start), curveX(progress), curveY(progress));
+  light.addColorStop(0, 'rgba(161, 117, 249, 0)');
+  light.addColorStop(.65, 'rgba(181, 146, 255, .45)');
+  light.addColorStop(1, '#e5faff');
+  context.save();
+  context.beginPath();
+  context.moveTo(curveX(start), curveY(start));
+  for (let i = 1; i <= 14; i++) {
+    const t = mix(start, progress, i / 14);
+    context.lineTo(curveX(t), curveY(t));
+  }
+  context.lineCap = 'round';
+  context.strokeStyle = light;
+  context.globalAlpha = .22;
+  context.lineWidth = 5;
+  context.stroke();
+  context.globalAlpha = .82;
+  context.lineWidth = 1.25;
+  context.stroke();
+  context.restore();
+}
+
 export function playEEGIntro(canvas, { getTarget, onFinish, onStage, word = "Hello." } = {}) {
   const context = canvas.getContext("2d", { alpha: true });
   const scene = context && createScene(window.innerWidth < 650 ? 760 : 1450, word);
@@ -240,15 +268,13 @@ export function playEEGIntro(canvas, { getTarget, onFinish, onStage, word = "Hel
   }
 
   function targetPosition() {
-    const { width, height, left, top, x, y } = viewport;
+    const { width, height, left, top } = viewport;
     const rect = getTarget?.();
-    if (!rect || !Number.isFinite(rect.x) || !Number.isFinite(rect.y)) {
-      return { x: x + width * 0.27, y: y + height * 0.29, visible: false };
-    }
+    if (!rect || !Number.isFinite(rect.x) || !Number.isFinite(rect.y)) return null;
     const rawX = rect.x - left + rect.width * 0.5;
     const rawY = rect.y - top + rect.height * 0.5;
     return {
-      x: clamp(rawX, 14, width - 14), y: clamp(rawY, 14, height - 14),
+      x: rawX, y: rawY,
       width: rect.width, height: rect.height,
       visible: rawX >= 0 && rawX <= width && rawY >= 0 && rawY <= height,
     };
@@ -285,6 +311,7 @@ export function playEEGIntro(canvas, { getTarget, onFinish, onStage, word = "Hel
 
     const landing = time >= WORD_END;
     const target = landing ? targetPosition() : null;
+    if (target?.visible) paintLandingTrail(context, afterBrain, x, y, target, width, height);
     const alpha = windowAlpha(time, 0, 135, 2505 + BRAIN_HOLD, DURATION);
     const rise = phase(time, 0, 345);
     const wobble = Math.sin(Math.PI * formBrain) * 0.43 + Math.sin(Math.PI * formWord) * 0.65;

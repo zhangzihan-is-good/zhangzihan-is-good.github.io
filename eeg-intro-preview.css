@@ -91,32 +91,6 @@
 .eeg-intro-dock button:focus-visible { outline: 2px solid #e6d6ff; outline-offset: 4px; }
 .eeg-intro-dock button:disabled { opacity: .55; cursor: default; }
 .eeg-intro-hint { max-width: 200px; color: #dbccec; font-size: 11px; }
-.eeg-intro-preview-target {
-  position: fixed;
-  left: 50%;
-  top: 75%;
-  transform: translate(-50%, -50%);
-  display: grid;
-  place-items: center;
-  width: 94px;
-  height: 32px;
-  border: 1px solid #bca8ffad;
-  border-radius: 7px;
-  color: #e2d2ff;
-  background: #231b33;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity .25s ease;
-}
-.eeg-intro-preview-target.is-visible { opacity: 1; }
-.eeg-intro-preview-target::after {
-  content: "Language";
-  position: absolute;
-  top: calc(100% + 4px);
-  color: #d0c0ec;
-  font-size: 9px;
-}
-html[data-language=zh] .eeg-intro-preview-target::after { content: "语言"; }
 .eeg-intro-hide-word .signal-word-label { opacity: 0; }
 .eeg-intro-landing .signal-language-token { animation: eeg-landing-glow .85s ease-out both; }
 .eeg-intro-landing .signal-word-label { animation: eeg-landing-word .65s ease-out both; }
@@ -135,6 +109,6 @@ html[data-language=zh] .eeg-intro-preview-target::after { content: "语言"; }
   .eeg-intro-hint { max-width: 135px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .eeg-intro-veil, .eeg-intro-caption, .eeg-intro-preview-target, .hero h1.signature-reveal { transition: none; }
+  .eeg-intro-veil, .eeg-intro-caption, .hero h1.signature-reveal { transition: none; }
   .eeg-intro-landing .signal-language-token, .eeg-intro-landing .signal-word-label { animation: none; }
 }
