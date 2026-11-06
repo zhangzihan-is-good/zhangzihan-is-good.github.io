@@ -61,7 +61,11 @@
 
   function updateScrollState() {
     framePending = false;
-    header?.classList.toggle('is-compact', scrollY > 90);
+    if (header) {
+      // Separate the thresholds so the header's 16 px height change cannot flip its own state.
+      const compact = header.classList.contains('is-compact');
+      header.classList.toggle('is-compact', compact ? scrollY >= 80 : scrollY > 100);
+    }
     const threshold = (header?.getBoundingClientRect().height || 80) + Math.min(innerHeight * .24, 160);
     let selected = null;
     navTargets.forEach(item => {
