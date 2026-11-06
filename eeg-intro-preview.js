@@ -25,6 +25,7 @@ let cancel = null;
 let portrait = null;
 let scrollAtStart = 0;
 let portraitOffset = 0;
+let portraitFade = null;
 let pendingHomepageOpening = false;
 
 function motionPaused() {
@@ -50,6 +51,13 @@ function resetPortraitFrame() {
   portraitOffset = 0;
 }
 
+function fadeInPortrait() {
+  portraitFade?.cancel();
+  portraitFade = portrait.animate([{opacity: 0}, {opacity: 1}], {
+    duration: 180, easing: 'ease-out', fill: 'backwards'
+  });
+}
+
 function frameLanguageBox() {
   const rect = targetRect();
   if (!rect) return;
@@ -57,22 +65,17 @@ function frameLanguageBox() {
   const overlapsDock = rect.right > controls.left && rect.left < controls.right;
   const bottom = Math.min(innerHeight - 18, overlapsDock ? controls.top - 12 : Infinity);
   const top = (header?.getBoundingClientRect().bottom ?? 0) + 12;
-  const unshiftedTop = rect.top - portraitOffset;
-  const unshiftedBottom = rect.bottom - portraitOffset;
-  const offset = unshiftedBottom > bottom ? bottom - unshiftedBottom : Math.max(0, top - unshiftedTop);
-  if (Math.abs(offset - portraitOffset) < 1) return;
-  if (Math.abs(offset) < 1) {
-    resetPortraitFrame();
-    return;
-  }
+  const offset = rect.bottom > bottom ? bottom - rect.bottom : Math.max(0, top - rect.top);
+  if (Math.abs(offset) < 1) return;
   portraitOffset = offset;
   portrait.style.setProperty('--eeg-intro-portrait-offset', `${offset}px`);
   portrait.classList.add('eeg-intro-framed-portrait');
+  fadeInPortrait();
 }
 
 function showStage(stage) {
-  if (stage === 'word' || stage === 'landing') frameLanguageBox();
   if (stage === 'landing') {
+    frameLanguageBox();
     overlay.classList.add('is-landing');
     return;
   }
@@ -89,9 +92,11 @@ function finish() {
   const stop = cancel;
   cancel = null;
   stop?.();
+  portraitFade?.cancel();
+  portraitFade = null;
   resetPortraitFrame();
   heading?.classList.remove('signature-hidden', 'signature-reveal');
-  portrait?.classList.remove('eeg-intro-hide-word');
+  portrait?.classList.remove('eeg-intro-hide-word', 'eeg-intro-steady-portrait');
   const restoreFocus = document.activeElement === skip;
   clearOverlay();
   syncControls();
@@ -167,13 +172,14 @@ function completeLanding() {
     return;
   }
 
-  // Let the real box glow, then move just the portrait back to its usual spot.
+  // Restore the original position while the framed portrait is fully faded out.
   const settle = portrait.animate(
-    [{transform: `translateY(${portraitOffset}px)`}, {transform: 'translateY(0)'}],
-    {delay: 250, duration: 330, easing: 'ease-in-out', fill: 'both'}
+    [{opacity: 1}, {opacity: 0}],
+    {delay: 250, duration: 180, easing: 'ease-in', fill: 'both'}
   );
   settle.onfinish = () => {
     resetPortraitFrame();
+    fadeInPortrait();
     settle.cancel();
     startSignature();
   };
@@ -185,7 +191,7 @@ function start() {
   clearOverlay();
   portrait = document.querySelector('.portrait-surface');
   portrait?.classList.remove('eeg-intro-landing');
-  portrait?.classList.add('eeg-intro-hide-word');
+  portrait?.classList.add('eeg-intro-hide-word', 'eeg-intro-steady-portrait');
   heading?.classList.add('signature-hidden');
   scrollAtStart = scrollY;
   playing = true;
@@ -234,8 +240,7 @@ window.addEventListener('scroll', () => {
   if (playing && Math.abs(scrollY - scrollAtStart) > 36) finish();
 }, {passive: true});
 window.addEventListener('resize', () => {
-  if (signing) finish();
-  else if (overlay.classList.contains('is-landing') && portrait?.classList.contains('eeg-intro-hide-word')) frameLanguageBox();
+  if (signing || overlay.classList.contains('is-landing')) finish();
 }, {passive: true});
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) finish();

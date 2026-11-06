@@ -95,6 +95,11 @@
   transform: translateY(var(--eeg-intro-portrait-offset));
   z-index: 1;
 }
+.portrait-surface.eeg-intro-steady-portrait :is(.portrait, .signal-atmosphere) { transition: none; }
+#home .portrait-surface.eeg-intro-steady-portrait :is(.signal-flow, .signal-ambient-nodes circle,
+  .portrait-energy-glow, .portrait-energy-ring > i, .portrait-energy-dust, .motion-wave) {
+  animation-play-state: paused;
+}
 .eeg-intro-hide-word .signal-word-label { opacity: 0; }
 .eeg-intro-landing .signal-language-token { animation: eeg-landing-glow .85s ease-out both; }
 .eeg-intro-landing .signal-word-label { animation: eeg-landing-word .65s ease-out both; }

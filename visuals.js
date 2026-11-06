@@ -61,7 +61,8 @@
       surface.style.setProperty('--art-y', '0px');
     };
     surface.addEventListener('pointermove', event => {
-      if (!finePointer.matches || reduced.matches || !surface.classList.contains('motion-active')) return;
+      if (!finePointer.matches || reduced.matches || !surface.classList.contains('motion-active') ||
+          surface.classList.contains('eeg-intro-steady-portrait')) return;
       const bounds = surface.getBoundingClientRect();
       nextPoint = {x: (event.clientX - bounds.left) / bounds.width - .5, y: (event.clientY - bounds.top) / bounds.height - .5};
       if (pointerFrame) return;
@@ -75,7 +76,9 @@
       });
     });
     surface.addEventListener('pointerleave', resetDepth);
-    new MutationObserver(() => { if (!surface.classList.contains('motion-active')) resetDepth(); }).observe(surface, {attributes: true, attributeFilter: ['class']});
+    new MutationObserver(() => {
+      if (!surface.classList.contains('motion-active') || surface.classList.contains('eeg-intro-steady-portrait')) resetDepth();
+    }).observe(surface, {attributes: true, attributeFilter: ['class']});
     reduced.addEventListener('change', resetDepth);
   }
 
