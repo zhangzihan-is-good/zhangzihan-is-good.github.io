@@ -292,10 +292,6 @@ export function playEEGIntro(canvas, { getTarget, onFinish, onStage, word = "Hel
     context.save();
     context.translate(x, y);
     context.scale(scale, scale);
-    const glowAlpha = windowAlpha(time, 0, 240, 1980 + BRAIN_HOLD, 2410 + BRAIN_HOLD);
-    context.globalAlpha = glowAlpha;
-    drawGlow(context, 0, 0, 330, "rgba(142, 86, 245, .17)");
-    context.globalAlpha = 1;
     paintSignal(context, scene, time);
     if (project) paintBrain(context, scene.brain, time, project, sweep);
     const ink = windowAlpha(afterBrain, 1585, 1750, 2005, 2200);

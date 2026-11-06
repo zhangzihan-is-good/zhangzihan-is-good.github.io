@@ -1,4 +1,4 @@
-import { playEEGIntro } from './eeg-intro.js?v=language-landing';
+import { playEEGIntro } from './eeg-intro.js?v=fixedportrait20261106';
 import { playSignature } from './signature-particles.js';
 
 const root = document.documentElement;
@@ -12,7 +12,12 @@ const skip = dock.querySelector('[data-eeg-skip]');
 const hint = dock.querySelector('.eeg-intro-hint');
 const heading = document.querySelector('.hero h1');
 const header = document.querySelector('.header');
+const portrait = document.querySelector('.portrait-surface');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const introReady = Promise.all([
+  document.fonts?.ready,
+  portrait?.querySelector('img')?.decode().catch(() => {})
+]);
 const stageLabels = {
   eeg: ['01  /  EEG SIGNAL', '01  /  脑电信号', 0],
   brain: ['02  /  HUMAN BRAIN', '02  /  人脑', 1],
@@ -22,10 +27,8 @@ const stageLabels = {
 let playing = false;
 let signing = false;
 let cancel = null;
-let portrait = null;
 let scrollAtStart = 0;
-let portraitOffset = 0;
-let portraitFade = null;
+let landingTarget = null;
 let pendingHomepageOpening = false;
 
 function motionPaused() {
@@ -42,40 +45,19 @@ function syncControls() {
 
 function targetRect() {
   const rect = portrait?.querySelector('.signal-language-token')?.getBoundingClientRect();
-  return rect?.width > 0 && rect.height > 0 ? rect : null;
-}
-
-function resetPortraitFrame() {
-  portrait?.classList.remove('eeg-intro-framed-portrait');
-  portrait?.style.removeProperty('--eeg-intro-portrait-offset');
-  portraitOffset = 0;
-}
-
-function fadeInPortrait() {
-  portraitFade?.cancel();
-  portraitFade = portrait.animate([{opacity: 0}, {opacity: 1}], {
-    duration: 180, easing: 'ease-out', fill: 'backwards'
-  });
-}
-
-function frameLanguageBox() {
-  const rect = targetRect();
-  if (!rect) return;
+  if (!rect || !rect.width || !rect.height) return null;
+  const viewport = canvas.getBoundingClientRect();
+  const top = Math.max(viewport.top, header?.getBoundingClientRect().bottom ?? 0);
+  if (rect.top < top || rect.bottom > viewport.bottom ||
+      rect.left < viewport.left || rect.right > viewport.right) return null;
   const controls = dock.getBoundingClientRect();
-  const overlapsDock = rect.right > controls.left && rect.left < controls.right;
-  const bottom = Math.min(innerHeight - 18, overlapsDock ? controls.top - 12 : Infinity);
-  const top = (header?.getBoundingClientRect().bottom ?? 0) + 12;
-  const offset = rect.bottom > bottom ? bottom - rect.bottom : Math.max(0, top - rect.top);
-  if (Math.abs(offset) < 1) return;
-  portraitOffset = offset;
-  portrait.style.setProperty('--eeg-intro-portrait-offset', `${offset}px`);
-  portrait.classList.add('eeg-intro-framed-portrait');
-  fadeInPortrait();
+  const overlapsDock = rect.right > controls.left && rect.left < controls.right &&
+    rect.bottom > controls.top && rect.top < controls.bottom;
+  return overlapsDock ? null : rect;
 }
 
 function showStage(stage) {
   if (stage === 'landing') {
-    frameLanguageBox();
     overlay.classList.add('is-landing');
     return;
   }
@@ -92,9 +74,8 @@ function finish() {
   const stop = cancel;
   cancel = null;
   stop?.();
-  portraitFade?.cancel();
-  portraitFade = null;
-  resetPortraitFrame();
+  landingTarget = null;
+  root.classList.remove('eeg-intro-active');
   heading?.classList.remove('signature-hidden', 'signature-reveal');
   portrait?.classList.remove('eeg-intro-hide-word', 'eeg-intro-steady-portrait');
   const restoreFocus = document.activeElement === skip;
@@ -166,41 +147,29 @@ function startSignature() {
 function completeLanding() {
   if (!playing) return;
   portrait?.classList.remove('eeg-intro-hide-word');
-  if (targetRect()) portrait.classList.add('eeg-intro-landing');
-  if (!portraitOffset) {
-    startSignature();
-    return;
-  }
-
-  // Restore the original position while the framed portrait is fully faded out.
-  const settle = portrait.animate(
-    [{opacity: 1}, {opacity: 0}],
-    {delay: 250, duration: 180, easing: 'ease-in', fill: 'both'}
-  );
-  settle.onfinish = () => {
-    resetPortraitFrame();
-    fadeInPortrait();
-    settle.cancel();
-    startSignature();
-  };
-  cancel = () => settle.cancel();
+  if (landingTarget) portrait.classList.add('eeg-intro-landing');
+  startSignature();
 }
 
-function start() {
+function startAtTop() {
   if (playing || motionPaused() || document.hidden) return;
   clearOverlay();
-  portrait = document.querySelector('.portrait-surface');
+  root.classList.add('eeg-intro-active');
+  header?.classList.remove('is-compact');
+  window.scrollTo({top: 0, behavior: 'instant'});
   portrait?.classList.remove('eeg-intro-landing');
-  portrait?.classList.add('eeg-intro-hide-word', 'eeg-intro-steady-portrait');
+  portrait?.classList.add('eeg-intro-steady-portrait');
   heading?.classList.add('signature-hidden');
   scrollAtStart = scrollY;
   playing = true;
   overlay.classList.add('is-playing');
   syncControls();
+  landingTarget = targetRect();
+  if (landingTarget) portrait.classList.add('eeg-intro-hide-word');
   showStage('eeg');
   try {
     const stop = playEEGIntro(canvas, {
-      getTarget: targetRect,
+      getTarget: () => landingTarget,
       word: root.dataset.language === 'zh' ? '你好。' : 'Hello.',
       onStage: showStage,
       onFinish: completeLanding
@@ -212,11 +181,6 @@ function start() {
   }
 }
 
-function startAtTop() {
-  window.scrollTo({top: 0, behavior: 'instant'});
-  start();
-}
-
 function playHomepageOpening() {
   if (!pendingHomepageOpening || document.hidden) return;
   pendingHomepageOpening = false;
@@ -226,12 +190,15 @@ function playHomepageOpening() {
   startAtTop();
 }
 
-function queueHomepageOpening() {
+async function queueHomepageOpening() {
+  const initialScroll = scrollY;
+  await introReady;
+  if (Math.abs(scrollY - initialScroll) > 36) return;
   pendingHomepageOpening = true;
   requestAnimationFrame(playHomepageOpening);
 }
 
-replay.addEventListener('click', () => requestAnimationFrame(startAtTop));
+replay.addEventListener('click', () => introReady.then(() => requestAnimationFrame(startAtTop)));
 skip.addEventListener('click', finish);
 document.addEventListener('keydown', event => {
   if (playing && event.key === 'Escape') finish();
@@ -241,6 +208,10 @@ window.addEventListener('scroll', () => {
 }, {passive: true});
 window.addEventListener('resize', () => {
   if (signing || overlay.classList.contains('is-landing')) finish();
+  else if (playing) {
+    landingTarget = targetRect();
+    portrait?.classList.toggle('eeg-intro-hide-word', Boolean(landingTarget));
+  }
 }, {passive: true});
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) finish();
