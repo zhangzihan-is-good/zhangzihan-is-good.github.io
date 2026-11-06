@@ -91,6 +91,10 @@
 .eeg-intro-dock button:focus-visible { outline: 2px solid #e6d6ff; outline-offset: 4px; }
 .eeg-intro-dock button:disabled { opacity: .55; cursor: default; }
 .eeg-intro-hint { max-width: 200px; color: #dbccec; font-size: 11px; }
+.portrait-surface.eeg-intro-framed-portrait {
+  transform: translateY(var(--eeg-intro-portrait-offset));
+  z-index: 1;
+}
 .eeg-intro-hide-word .signal-word-label { opacity: 0; }
 .eeg-intro-landing .signal-language-token { animation: eeg-landing-glow .85s ease-out both; }
 .eeg-intro-landing .signal-word-label { animation: eeg-landing-word .65s ease-out both; }

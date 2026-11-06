@@ -23,8 +23,8 @@ let playing = false;
 let signing = false;
 let cancel = null;
 let portrait = null;
-let expectedScroll = 0;
-let scrollBeforeLanding = null;
+let scrollAtStart = 0;
+let portraitOffset = 0;
 let pendingHomepageOpening = false;
 
 function motionPaused() {
@@ -44,26 +44,34 @@ function targetRect() {
   return rect?.width > 0 && rect.height > 0 ? rect : null;
 }
 
-function scrollDuringOpening(top) {
-  window.scrollTo({top, behavior: 'instant'});
-  expectedScroll = scrollY;
+function resetPortraitFrame() {
+  portrait?.classList.remove('eeg-intro-framed-portrait');
+  portrait?.style.removeProperty('--eeg-intro-portrait-offset');
+  portraitOffset = 0;
 }
 
-function showLanguageBox() {
+function frameLanguageBox() {
   const rect = targetRect();
   if (!rect) return;
   const controls = dock.getBoundingClientRect();
   const overlapsDock = rect.right > controls.left && rect.left < controls.right;
   const bottom = Math.min(innerHeight - 18, overlapsDock ? controls.top - 12 : Infinity);
   const top = (header?.getBoundingClientRect().bottom ?? 0) + 12;
-  const shift = rect.bottom > bottom ? rect.bottom - bottom : Math.min(0, rect.top - top);
-  if (Math.abs(shift) < 1) return;
-  scrollBeforeLanding ??= scrollY;
-  scrollDuringOpening(scrollY + shift);
+  const unshiftedTop = rect.top - portraitOffset;
+  const unshiftedBottom = rect.bottom - portraitOffset;
+  const offset = unshiftedBottom > bottom ? bottom - unshiftedBottom : Math.max(0, top - unshiftedTop);
+  if (Math.abs(offset - portraitOffset) < 1) return;
+  if (Math.abs(offset) < 1) {
+    resetPortraitFrame();
+    return;
+  }
+  portraitOffset = offset;
+  portrait.style.setProperty('--eeg-intro-portrait-offset', `${offset}px`);
+  portrait.classList.add('eeg-intro-framed-portrait');
 }
 
 function showStage(stage) {
-  if (stage === 'word' || stage === 'landing') showLanguageBox();
+  if (stage === 'word' || stage === 'landing') frameLanguageBox();
   if (stage === 'landing') {
     overlay.classList.add('is-landing');
     return;
@@ -78,10 +86,10 @@ function finish() {
   if (!playing) return;
   playing = false;
   signing = false;
-  scrollBeforeLanding = null;
   const stop = cancel;
   cancel = null;
   stop?.();
+  resetPortraitFrame();
   heading?.classList.remove('signature-hidden', 'signature-reveal');
   portrait?.classList.remove('eeg-intro-hide-word');
   const restoreFocus = document.activeElement === skip;
@@ -154,31 +162,22 @@ function completeLanding() {
   if (!playing) return;
   portrait?.classList.remove('eeg-intro-hide-word');
   if (targetRect()) portrait.classList.add('eeg-intro-landing');
-  if (scrollBeforeLanding === null) {
+  if (!portraitOffset) {
     startSignature();
     return;
   }
 
-  // Let the word illuminate the real box before returning to the headline.
-  const from = scrollY;
-  const to = scrollBeforeLanding;
-  let started;
-  let request;
-  function returnFrame(now) {
-    started ??= now;
-    const progress = Math.min(1, Math.max(0, (now - started - 250) / 330));
-    if (progress > 0) {
-      const ease = progress * progress * (3 - 2 * progress);
-      scrollDuringOpening(from + (to - from) * ease);
-    }
-    if (progress < 1) request = requestAnimationFrame(returnFrame);
-    else {
-      scrollBeforeLanding = null;
-      startSignature();
-    }
-  }
-  request = requestAnimationFrame(returnFrame);
-  cancel = () => cancelAnimationFrame(request);
+  // Let the real box glow, then move just the portrait back to its usual spot.
+  const settle = portrait.animate(
+    [{transform: `translateY(${portraitOffset}px)`}, {transform: 'translateY(0)'}],
+    {delay: 250, duration: 330, easing: 'ease-in-out', fill: 'both'}
+  );
+  settle.onfinish = () => {
+    resetPortraitFrame();
+    settle.cancel();
+    startSignature();
+  };
+  cancel = () => settle.cancel();
 }
 
 function start() {
@@ -188,8 +187,7 @@ function start() {
   portrait?.classList.remove('eeg-intro-landing');
   portrait?.classList.add('eeg-intro-hide-word');
   heading?.classList.add('signature-hidden');
-  scrollBeforeLanding = null;
-  expectedScroll = scrollY;
+  scrollAtStart = scrollY;
   playing = true;
   overlay.classList.add('is-playing');
   syncControls();
@@ -208,15 +206,8 @@ function start() {
   }
 }
 
-function skipOpening() {
-  if (playing && scrollBeforeLanding !== null && Math.abs(scrollY - expectedScroll) < 2) {
-    scrollDuringOpening(scrollBeforeLanding);
-  }
-  finish();
-}
-
 function startAtTop() {
-  scrollDuringOpening(0);
+  window.scrollTo({top: 0, behavior: 'instant'});
   start();
 }
 
@@ -235,16 +226,16 @@ function queueHomepageOpening() {
 }
 
 replay.addEventListener('click', () => requestAnimationFrame(startAtTop));
-skip.addEventListener('click', skipOpening);
+skip.addEventListener('click', finish);
 document.addEventListener('keydown', event => {
-  if (playing && event.key === 'Escape') skipOpening();
+  if (playing && event.key === 'Escape') finish();
 });
 window.addEventListener('scroll', () => {
-  if (playing && Math.abs(scrollY - expectedScroll) > 36) finish();
+  if (playing && Math.abs(scrollY - scrollAtStart) > 36) finish();
 }, {passive: true});
 window.addEventListener('resize', () => {
   if (signing) finish();
-  else if (overlay.classList.contains('is-landing') && portrait?.classList.contains('eeg-intro-hide-word')) showLanguageBox();
+  else if (overlay.classList.contains('is-landing') && portrait?.classList.contains('eeg-intro-hide-word')) frameLanguageBox();
 }, {passive: true});
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) finish();
