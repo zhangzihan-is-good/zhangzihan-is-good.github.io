@@ -13,7 +13,6 @@ const hint = dock.querySelector('.eeg-intro-hint');
 const heading = document.querySelector('.hero h1');
 const header = document.querySelector('.header');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-const sessionKey = 'zz-eeg-language-landing-played';
 const stageLabels = {
   eeg: ['01  /  EEG SIGNAL', '01  /  脑电信号', 0],
   brain: ['02  /  HUMAN BRAIN', '02  /  人脑', 1],
@@ -26,6 +25,7 @@ let cancel = null;
 let portrait = null;
 let expectedScroll = 0;
 let scrollBeforeLanding = null;
+let pendingHomepageOpening = false;
 
 function motionPaused() {
   return reduce.matches || root.dataset.motionPaused === 'true';
@@ -195,9 +195,6 @@ function start() {
   syncControls();
   showStage('eeg');
   try {
-    sessionStorage.setItem(sessionKey, 'true');
-  } catch {}
-  try {
     const stop = playEEGIntro(canvas, {
       getTarget: targetRect,
       word: root.dataset.language === 'zh' ? '你好。' : 'Hello.',
@@ -218,10 +215,26 @@ function skipOpening() {
   finish();
 }
 
-replay.addEventListener('click', () => {
-  window.scrollTo({top: 0, behavior: 'instant'});
-  requestAnimationFrame(start);
-});
+function startAtTop() {
+  scrollDuringOpening(0);
+  start();
+}
+
+function playHomepageOpening() {
+  if (!pendingHomepageOpening || document.hidden) return;
+  pendingHomepageOpening = false;
+  if ((location.hash && location.hash !== '#home') ||
+      new URLSearchParams(location.search).has('paper') ||
+      document.querySelector('dialog[open]')) return;
+  startAtTop();
+}
+
+function queueHomepageOpening() {
+  pendingHomepageOpening = true;
+  requestAnimationFrame(playHomepageOpening);
+}
+
+replay.addEventListener('click', () => requestAnimationFrame(startAtTop));
 skip.addEventListener('click', skipOpening);
 document.addEventListener('keydown', event => {
   if (playing && event.key === 'Escape') skipOpening();
@@ -235,6 +248,11 @@ window.addEventListener('resize', () => {
 }, {passive: true});
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) finish();
+  else if (pendingHomepageOpening) requestAnimationFrame(playHomepageOpening);
+});
+window.addEventListener('pagehide', finish);
+window.addEventListener('pageshow', event => {
+  if (event.persisted) queueHomepageOpening();
 });
 function onMotionChange() {
   if (motionPaused()) finish();
@@ -245,10 +263,4 @@ reduce.addEventListener('change', onMotionChange);
 
 dock.hidden = false;
 syncControls();
-let hasPlayed = false;
-try {
-  hasPlayed = sessionStorage.getItem(sessionKey) === 'true';
-} catch {}
-if (!hasPlayed && (!location.hash || location.hash === '#home')) {
-  requestAnimationFrame(start);
-}
+queueHomepageOpening();

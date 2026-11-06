@@ -3,6 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>
+    if ('scrollRestoration' in history && (!location.hash || location.hash === '#home') &&
+        !new URLSearchParams(location.search).has('paper')) {
+      history.scrollRestoration = 'manual';
+    }
+  </script>
   <meta name="google-site-verification" content="2VnWIPDbCchsnS4rOeXHbjLBKDrV9easLh10ubuWqZY">
   <meta name="description" content="Zihan Zhang / 张梓寒 — Ph.D. researcher at Harbin Institute of Technology. Research in brain–computer interfaces, brain-inspired AI, language and cognition, and medical AI.">
   <meta name="theme-color" content="#f7f7f2">
