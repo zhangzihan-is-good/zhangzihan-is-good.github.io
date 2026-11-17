@@ -1,4 +1,4 @@
-/* Keep the veil behind the portrait and the particles above the Language box. */
+/* The veil covers the hero, and the particles fly above it into the Language box. */
 .eeg-intro-overlay {
   pointer-events: none;
   visibility: hidden;
@@ -17,7 +17,6 @@
   transition: opacity .34s ease;
 }
 .eeg-intro-canvas { z-index: 28; }
-.hero-visual .portrait-surface { z-index: 18; }
 .eeg-intro-active .header-inner { transition: none; }
 .is-playing > .eeg-intro-veil { opacity: 1; }
 .is-landing > .eeg-intro-veil { opacity: .04; }

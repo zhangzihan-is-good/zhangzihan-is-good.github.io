@@ -99,12 +99,12 @@ window.PROFILE_DATA = {
     {period:'2016–2020',school:{zh:'哈尔滨工业大学',en:'Harbin Institute of Technology'},degree:{zh:'学士 · 物联网工程',en:'B.Eng. · Internet of Things Engineering'},detail:{zh:'计算机科学与技术学院',en:'School of Computer Science and Technology'}}
   ],
   honors: [
-    {year:2026,title:{zh:'博士生国家奖学金',en:'National Scholarship for Doctoral Students'}},
-    {year:2026,title:{zh:'国家留学基金管理委员会奖学金',en:'China Scholarship Council Scholarship'}},
-    {year:2026,title:{zh:'哈尔滨工业大学优秀学生标兵',en:'Outstanding Student Model, Harbin Institute of Technology'}},
-    {year:2024,title:{zh:'哈尔滨工业大学优秀助教',en:'Outstanding Teaching Assistant, Harbin Institute of Technology'}},
+    {year:2026,title:{zh:'博士生国家奖学金（国家级 2.5%）',en:'National Scholarship for Doctoral Students (National · 2.5%)'}},
+    {year:2026,title:{zh:'国家留学基金管理委员会奖学金（国家级 全国6600人）',en:'China Scholarship Council Scholarship (National · 6,600 recipients nationwide)'}},
+    {year:2026,title:{zh:'哈尔滨工业大学优秀学生标兵（校级 0.8%）',en:'Outstanding Student Model, Harbin Institute of Technology (University · 0.8%)'}},
+    {year:2024,title:{zh:'哈尔滨工业大学优秀助教（校级 低于10%）',en:'Outstanding Teaching Assistant, Harbin Institute of Technology (University · Under 10%)'}},
     {year:2022,title:{zh:'哈尔滨工业大学优秀教学成果',en:'Outstanding Teaching Achievement, Harbin Institute of Technology'}},
-    {year:2021,title:{zh:'哈尔滨工业大学一等学业奖学金',en:'First-Class Academic Scholarship, Harbin Institute of Technology'}}
+    {year:2021,title:{zh:'哈尔滨工业大学一等学业奖学金（校级 20%）',en:'First-Class Academic Scholarship, Harbin Institute of Technology (University · 20%)'}}
   ],
   experience: [
     {period:'2024.12–present',role:{zh:'期刊审稿人',en:'Journal Reviewer'},detail:{zh:'为IEEE TBCS、Cognitive Computation、Scientific Reports等期刊审稿。',en:'Reviewer for IEEE TBCS, Cognitive Computation, Scientific Reports, and other journals.'}},
