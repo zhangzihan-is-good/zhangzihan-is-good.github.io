@@ -121,7 +121,8 @@ window.PROFILE_DATA = {
     {name:'LaTeX',level:{zh:'熟练',en:'Proficient'}},
     {name:'Linux',level:{zh:'基础',en:'Basic'}},
     {name:'Java',level:{zh:'基础',en:'Basic'}},
-    {name:'C++',level:{zh:'基础',en:'Basic'}}
+    {name:'C++',level:{zh:'基础',en:'Basic'}},
+    {name:'English CET-6 462',level:{zh:'大学英语六级',en:'College English Test, Band 6'}}
   ],
   interests: {zh:['技术分享','魔方','健身','摄影'],en:['Technology writing','Rubik’s Cube','Fitness','Photography']},
   research: [
